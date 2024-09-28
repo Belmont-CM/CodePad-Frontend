@@ -1,0 +1,72 @@
+/* Estilos para el fondo de canvas */
+canvas {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+z-index: 1;
+}
+
+/* Ajustes para los componentes principales */
+.content-wrapper {
+position: relative;
+z-index: 2;
+display: flex;
+flex-direction: row;
+}
+
+/* Estilo para el contenedor principal */
+.min-h-screen {
+background: linear-gradient(to bottom right, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+display: flex;
+flex-direction: column;
+}
+
+/* Estilos para los contenedores izquierdo y derecho */
+.content-wrapper > div {
+display: flex;
+flex-direction: column;
+}
+.content-wrapper > div:first-child {
+width: 65%;
+padding-right: 2rem;
+}
+.content-wrapper > div:last-child {
+width: 35%;
+}
+
+/* Estilo para los inputs */
+input {
+transition: all 0.3s ease;
+}
+input:focus {
+outline: none;
+box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Estilo para los botones */
+button {
+transition: all 0.3s ease;
+}
+button:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el logo */
+.rounded-full {
+box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+  .content-wrapper > div:first-child,
+  .content-wrapper > div:last-child {
+    width: 100%;
+    padding-right: 0;
+  }
+}
