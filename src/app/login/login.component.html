@@ -1,17 +1,31 @@
-<div class="min-h-screen flex flex-row justify-center items-center bg-transparent p-4 relative"> <!-- Flex row y espacio entre elementos -->
+<div
+  class="min-h-screen flex flex-row justify-center items-center bg-transparent p-4 relative"
+>
+  <!-- Flex row y espacio entre elementos -->
   <canvas #canvasElement class="absolute inset-0 w-full h-full"></canvas>
 
   <!-- Contenedor izquierdo (65% de ancho) -->
-  <div class="w-[950px] h-[700px] p-8 flex flex-col justify-center items-center text-white bg-gradient-to-br from-gray-800 to-gray-900 bg-opacity-50 backdrop-blur-md rounded-lg shadow-lg shadow-black/50">
+  <div
+    class="w-[950px] h-[700px] p-8 flex flex-col justify-center items-center text-white bg-gradient-to-br from-gray-800 to-gray-900 bg-opacity-50 backdrop-blur-md rounded-lg shadow-lg shadow-black/50"
+  >
     <!-- Mensaje de bienvenida -->
-    <div class="mb-8 text-center">
-      <h1 class="text-4xl font-bold mb-4">Bienvenido a CodePad</h1>
-      <p class="text-xl text-gray-300" *ngIf="!isRegistering">
+    <div
+      class="mb-8 text-center"
+      style="margin-top: 110px"
+      *ngIf="!isRegistering"
+    >
+      <h1 class="text-4xl font-bold mb-4 animate-rgb-smooth">
+        Bienvenido a CodePad
+      </h1>
+      <p class="text-lg text-gray-400 opacity-80">
         Inicia sesión para acceder a todas las funciones
       </p>
     </div>
     <!-- Resto del contenido del contenedor izquierdo -->
-    <div *ngIf="showLoader" class="absolute inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50 z-10">
+    <div
+      *ngIf="showLoader"
+      class="absolute inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50 z-10"
+    >
       <div class="terminal-loader">
         <div class="terminal-header">
           <div class="terminal-title">Status</div>
@@ -25,16 +39,25 @@
       </div>
     </div>
 
-    <div *ngIf="isRegistering; else infoTemplate" class="transition-opacity duration-500 ease-in-out">
-      <button (click)="isRegistering = false" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+    <div
+      *ngIf="isRegistering; else infoTemplate"
+      class="transition-opacity duration-500 ease-in-out"
+    >
+      <button
+        (click)="isRegistering = false"
+        class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+      >
         <fa-icon [icon]="['fas', 'times']" size="lg"></fa-icon>
       </button>
-      <h2 class="text-2xl font-bold mb-6">Crear nueva cuenta</h2>
+      <h2 class="text-2xl font-bold mb-6 animate-rgb-smooth text-center">Crear cuenta nueva</h2>
       <form class="space-y-4">
         <div class="space-y-2">
           <label htmlFor="reg-username" class="block text-sm font-medium">Nombre de usuario</label>
           <div class="relative">
-            <fa-icon [icon]="['fas', 'user']" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></fa-icon>
+            <fa-icon
+              [icon]="['fas', 'user']"
+              class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            ></fa-icon>
             <input
               id="reg-username"
               type="text"
@@ -46,7 +69,10 @@
         <div class="space-y-2">
           <label htmlFor="reg-email" class="block text-sm font-medium">Correo electrónico</label>
           <div class="relative">
-            <fa-icon [icon]="['fas', 'envelope']" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></fa-icon>
+            <fa-icon
+              [icon]="['fas', 'envelope']"
+              class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            ></fa-icon>
             <input
               id="reg-email"
               type="email"
@@ -58,13 +84,49 @@
         <div class="space-y-2">
           <label htmlFor="reg-password" class="block text-sm font-medium">Contraseña</label>
           <div class="relative">
-            <fa-icon [icon]="['fas', 'lock']" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></fa-icon>
+            <fa-icon
+              [icon]="['fas', 'lock']"
+              class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            ></fa-icon>
             <input
               id="reg-password"
               type="password"
               class="w-full bg-gray-700 text-white pl-10 pr-10 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Ingrese su contraseña"
-            />
+              [type]="showPassword ? 'text' : 'password'" />
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            >
+              <fa-icon
+                [icon]="showPassword ? ['fas', 'eye-slash'] : ['fas', 'eye']"
+              ></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <label htmlFor="reg-confirm-password" class="block text-sm font-medium">Confirmar contraseña</label>
+          <div class="relative">
+            <fa-icon
+              [icon]="['fas', 'lock']"
+              class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            ></fa-icon>
+            <input
+              id="reg-confirm-password"
+              type="password"
+              class="w-full bg-gray-700 text-white pl-10 pr-10 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Confirme su contraseña"
+              [type]="showConfirmPassword ? 'text' : 'password'" />
+            <button
+              type="button"
+              (click)="toggleConfirmPasswordVisibility()"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            >
+              <fa-icon
+                [icon]="showConfirmPassword ? ['fas', 'eye-slash'] : ['fas', 'eye']"
+              ></fa-icon>
+            </button>
           </div>
         </div>
         <button
@@ -78,17 +140,28 @@
     </div>
 
     <ng-template #infoTemplate>
-      <div class="flex-grow w-full max-w-md">
+      <div class="flex-grow w-full max-w-md mt-[60px]">
         <div class="flex items-center justify-start mb-4">
-          <fa-icon [icon]="systemInfo[currentInfoIndex].icon" class="text-green-400 text-2xl mr-3"></fa-icon>
+          <fa-icon
+            [icon]="systemInfo[currentInfoIndex].icon"
+            class="text-green-400 text-2xl mr-3"
+          ></fa-icon>
           <h2 class="text-2xl font-bold">
             {{ systemInfo[currentInfoIndex].title }}
           </h2>
         </div>
-        <ul class="space-y-2 bg-gradient-to-br from-gray-800 to-gray-900 bg-opacity-50 backdrop-blur-md p-6 rounded-lg shadow-lg shadow-black/50">
-          <li *ngFor="let item of systemInfo[currentInfoIndex].items" class="flex items-start">
-            <fa-icon [icon]="['fas', 'check-circle']" class="text-green-400 text-2xl mr-3"></fa-icon>
-            <span>{{ item }}</span>
+        <ul
+          class="space-y-2 bg-gradient-to-br from-gray-800 to-gray-900 bg-opacity-50 backdrop-blur-md p-6 rounded-lg shadow-lg shadow-black/50"
+        >
+          <li
+            *ngFor="let item of systemInfo[currentInfoIndex].items"
+            class="flex items-start"
+          >
+            <fa-icon
+              [icon]="item.icon" 
+              class="text-green-400 text-2xl mr-3"
+            ></fa-icon>
+            <span>{{ item.text }}</span>
           </li>
         </ul>
       </div>
@@ -96,14 +169,23 @@
   </div>
 
   <!-- Contenedor derecho (35% de ancho) -->
-  <div class="w-[500px] h-[700px] bg-gradient-to-br from-gray-800 to-gray-900 bg-opacity-50 backdrop-blur-md p-8 flex flex-col justify-center items-center rounded-lg ml-20">
+  <div
+    class="w-[500px] h-[700px] bg-gradient-to-br from-gray-800 to-gray-900 bg-opacity-50 backdrop-blur-md p-8 flex flex-col justify-center items-center rounded-lg ml-20"
+  >
     <div class="mb-8">
-        <!-- Imagen del logo -->
-        <img src="assets/logo-completo.png" alt="ehwe pq no carga el logo" class="w-24 h-24 object-contain">
-      </div>
+      <!-- Imagen del logo -->
+      <img
+        src="./assets/logo-completo.png"
+        alt="ehwe pq no carga el logo"
+        class="w-24 h-24 object-contain"
+      />
+    </div>
     <div class="space-y-4 w-full max-w-sm">
       <div class="relative">
-        <fa-icon [icon]="['fas', 'user']" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></fa-icon>
+        <fa-icon
+          [icon]="['fas', 'user']"
+          class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+        ></fa-icon>
         <input
           class="w-full bg-gray-700 bg-opacity-50 text-white pl-10 pr-4 py-3 rounded-md"
           [(ngModel)]="username"
@@ -112,7 +194,10 @@
         />
       </div>
       <div class="relative">
-        <fa-icon [icon]="['fas', 'lock']" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></fa-icon>
+        <fa-icon
+          [icon]="['fas', 'lock']"
+          class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+        ></fa-icon>
         <input
           class="w-full bg-gray-700 bg-opacity-50 text-white pl-10 pr-10 py-3 rounded-md"
           [(ngModel)]="password"
@@ -124,7 +209,9 @@
           (click)="togglePasswordVisibility()"
           class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
         >
-          <fa-icon [icon]="showPassword ? ['fas', 'eye-slash'] : ['fas', 'eye']"></fa-icon>
+          <fa-icon
+            [icon]="showPassword ? ['fas', 'eye-slash'] : ['fas', 'eye']"
+          ></fa-icon>
         </button>
       </div>
       <button

@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faBug, faUser, faLock, faEye, faEyeSlash, faChevronRight, faBell, faKeyboard } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faUser, faLock, faEye, faEyeSlash, faChevronRight, faBell, faKeyboard, faCheckDouble, faBolt, faMicrochip} from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-login',
@@ -15,39 +16,44 @@ export class LoginComponent implements OnInit {
   email: string = '';
   showLoader: boolean = false;
   showPassword: boolean = false;
-  currentInfoIndex: number = 0;
+  currentInfoIndex: number = 0;       // Para la contraseña
+  showConfirmPassword: boolean = false;
   mouseX: number = 0;
   mouseY: number = 0;
   
-  systemInfo = [
+  systemInfo: {
+    title: string;
+    icon: IconDefinition; // Cambiar a IconDefinition
+    items: { text: string; icon: IconDefinition }[]; // Cambiar a IconDefinition
+}[] = [
     {
-      title: "Novedades",
-      icon: faBell,  // Cambiar a referencia directa
-      items: [
-        "Nueva interfaz de usuario más intuitiva",
-        "Integración con servicios de terceros",
-        "Modo oscuro automático"
-      ]
+        title: "Bugs arreglados",
+        icon: faBug,
+        items: [
+            { text: 'Corregido error de carga en reportes', icon: faCheckDouble }, // Cambiar a faCheckDouble
+            { text: 'Solucionado problema de sincronización', icon: faCheckDouble },
+            { text: 'Mejorado rendimiento en dispositivos móviles', icon: faCheckDouble }
+        ]
     },
     {
-      title: "Atajos de teclado",
-      icon: faKeyboard,  // Cambiar a referencia directa
-      items: [
-        "Ctrl + N: Nuevo documento",
-        "Ctrl + F: Búsqueda rápida",
-        "Ctrl + S: Guardar cambios"
-      ]
+        title: "Novedades",
+        icon: faBell,
+        items: [
+            { text: 'Nueva interfaz de usuario más intuitiva', icon: faBolt }, // Cambiar a faBolt
+            { text: 'Integración con servicios de terceros', icon: faBolt },
+            { text: 'Modo oscuro automático', icon: faBolt }
+        ]
     },
     {
-      title: "Bugs arreglados",
-      icon: faBug,  // Cambiar a referencia directa
-      items: [
-        "Corregido error de carga en reportes",
-        "Solucionado problema de sincronización",
-        "Mejorado rendimiento en dispositivos móviles"
-      ]
+        title: "Atajos de teclado",
+        icon: faKeyboard,
+        items: [
+            { text: 'Ctrl + N: Nuevo documento', icon: faMicrochip }, // Cambiar a faMicrochip
+            { text: 'Ctrl + F: Búsqueda rápida', icon: faMicrochip },
+            { text: 'Ctrl + S: Guardar cambios', icon: faMicrochip }
+        ]
     }
-  ];
+];
   
 
   constructor(private library: FaIconLibrary) {
@@ -71,6 +77,10 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
+
   startInfoRotation() {
     setInterval(() => {
       this.currentInfoIndex = (this.currentInfoIndex + 1) % this.systemInfo.length;
@@ -83,7 +93,7 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.showLoader = false; // Oculta el spinner
       this.isRegistering = true; // Muestra el formulario de registro
-    }, 4000); // Cambia después de 3 segundos
+    }, 2000); // Cambia después de 3 segundos
   }
   
   setupCanvas() { 

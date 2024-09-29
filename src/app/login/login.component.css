@@ -1,3 +1,4 @@
+/* SPINNER LOADING*/
 @keyframes blinkCursor {
     50% {
       border-right-color: transparent;
@@ -95,4 +96,34 @@
   .bg-opacity-50 {
     background-color: rgba(26, 26, 26, 0.5); /* Ajusta la opacidad */
   }
+
+  /* LETRAS RGB DE BIENVENIDA */ 
+  @keyframes rgb-animation-smooth {
+    0% {
+        color: #ff0000;
+    }
+    16.67% {
+        color: #ff8000;
+    }
+    33.33% {
+        color: #ffff00;
+    }
+    50% {
+        color: #00ff00;
+    }
+    66.67% {
+        color: #0080ff;
+    }
+    83.33% {
+        color: #8000ff;
+    }
+    100% {
+        color: #ff0000;
+    }
+}
+
+.animate-rgb-smooth {
+    animation: rgb-animation-smooth 10s infinite linear;
+}
+
   
