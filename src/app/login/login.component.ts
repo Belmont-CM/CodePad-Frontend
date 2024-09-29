@@ -1,6 +1,18 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faBug, faUser, faLock, faEye, faEyeSlash, faChevronRight, faBell, faKeyboard, faCheckDouble, faBolt, faMicrochip} from '@fortawesome/free-solid-svg-icons';
+import {
+  faBug,
+  faUser,
+  faLock,
+  faEye,
+  faEyeSlash,
+  faChevronRight,
+  faBell,
+  faKeyboard,
+  faCheckDouble,
+  faBolt,
+  faMicrochip,
+} from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
@@ -9,99 +21,119 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('canvasElement', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
-  username: string = '';
-  password: string = '';
-  isRegistering: boolean = false;
-  email: string = '';
-  showLoader: boolean = false;
-  showPassword: boolean = false;
-  currentInfoIndex: number = 0;       // Para la contraseña
-  showConfirmPassword: boolean = false;
-  mouseX: number = 0;
-  mouseY: number = 0;
-  
-  systemInfo: {
-    title: string;
-    icon: IconDefinition; // Cambiar a IconDefinition
-    items: { text: string; icon: IconDefinition }[]; // Cambiar a IconDefinition
-}[] = [
-    {
-        title: "Bugs arreglados",
-        icon: faBug,
-        items: [
-            { text: 'Corregido error de carga en reportes', icon: faCheckDouble }, // Cambiar a faCheckDouble
-            { text: 'Solucionado problema de sincronización', icon: faCheckDouble },
-            { text: 'Mejorado rendimiento en dispositivos móviles', icon: faCheckDouble }
-        ]
-    },
-    {
-        title: "Novedades",
-        icon: faBell,
-        items: [
-            { text: 'Nueva interfaz de usuario más intuitiva', icon: faBolt }, // Cambiar a faBolt
-            { text: 'Integración con servicios de terceros', icon: faBolt },
-            { text: 'Modo oscuro automático', icon: faBolt }
-        ]
-    },
-    {
-        title: "Atajos de teclado",
-        icon: faKeyboard,
-        items: [
-            { text: 'Ctrl + N: Nuevo documento', icon: faMicrochip }, // Cambiar a faMicrochip
-            { text: 'Ctrl + F: Búsqueda rápida', icon: faMicrochip },
-            { text: 'Ctrl + S: Guardar cambios', icon: faMicrochip }
-        ]
-    }
-];
-  
-
-  constructor(private library: FaIconLibrary) {
-    library.addIcons(faBug, faUser, faLock, faEye, faEyeSlash, faChevronRight, faBell, faKeyboard);
-  }
+  @ViewChild('canvasElement', { static: true })
+  canvasRef!: ElementRef<HTMLCanvasElement>;
 
   ngOnInit() {
     this.setupCanvas();
-    this.startInfoRotation();
+    this.RotacionInformacion();
   }
+
+  constructor(private library: FaIconLibrary) {
+    library.addIcons(
+      faBug,
+      faUser,
+      faLock,
+      faEye,
+      faEyeSlash,
+      faChevronRight,
+      faBell,
+      faKeyboard
+    );
+  }
+
+  // * Iniciar sesion
+  username: string = '';
+  password: string = '';
+
+  // * Resgistrarse
+  isRegistering: boolean = false;
+  email: string = '';
+  showConfirmPassword: boolean = false;
+  showLoader: boolean = false;
+  showPassword: boolean = false;
+
+  // * Informacion del sistema
+  currentInfoIndex: number = 0;
+
+  // * Fondo canvas
+  mouseX: number = 0;
+  mouseY: number = 0;
+
+  InfoSistema: {
+    title: string;
+    icon: IconDefinition;
+    items: { text: string; icon: IconDefinition }[];
+  }[] = [
+    {
+      title: 'Bugs arreglados',
+      icon: faBug,
+      items: [
+        { text: 'Corregido error de carga en reportes', icon: faCheckDouble },
+        { text: 'Solucionado problema de sincronización', icon: faCheckDouble },
+        {
+          text: 'Mejorado rendimiento en dispositivos móviles',
+          icon: faCheckDouble,
+        },
+      ],
+    },
+    {
+      title: 'Novedades',
+      icon: faBell,
+      items: [
+        { text: 'Nueva interfaz de usuario más intuitiva', icon: faBolt },
+        { text: 'Integración con servicios de terceros', icon: faBolt },
+        { text: 'Modo oscuro automático', icon: faBolt },
+      ],
+    },
+    {
+      title: 'Atajos de teclado',
+      icon: faKeyboard,
+      items: [
+        { text: 'Ctrl + N: Nuevo documento', icon: faMicrochip },
+        { text: 'Ctrl + F: Búsqueda rápida', icon: faMicrochip },
+        { text: 'Ctrl + S: Guardar cambios', icon: faMicrochip },
+      ],
+    },
+  ];
 
   onSubmit() {
     // Manejar el inicio de sesión
   }
 
-  onRegister() {
+  crearUsuario() {
     // Aquí va la lógica para crear usuario
   }
 
-  togglePasswordVisibility() {
+  AlternarVisibilidadPassword() {
     this.showPassword = !this.showPassword;
   }
 
-  toggleConfirmPasswordVisibility() {
+  AlternarVisibilidadCreacionPassword() {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
-  startInfoRotation() {
+  RotacionInformacion() {
     setInterval(() => {
-      this.currentInfoIndex = (this.currentInfoIndex + 1) % this.systemInfo.length;
+      this.currentInfoIndex =
+        (this.currentInfoIndex + 1) % this.InfoSistema.length;
     }, 5000);
   }
 
-  createUser() {
-    this.showLoader = true; // Muestra el spinner
-    this.isRegistering = false; // Oculta el formulario de inicio de sesión
+  crearUsuarioVisibilidad() {
+    this.showLoader = true;
+    this.isRegistering = false;
     setTimeout(() => {
-      this.showLoader = false; // Oculta el spinner
-      this.isRegistering = true; // Muestra el formulario de registro
-    }, 2000); // Cambia después de 3 segundos
+      this.showLoader = false;
+      this.isRegistering = true;
+    }, 2000);
   }
-  
-  setupCanvas() { 
+
+  setupCanvas() {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
-    // Inicializa el tamaño del canvas
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -112,7 +144,10 @@ export class LoginComponent implements OnInit {
 
     const particles: Particle[] = [];
     const particleCount = 150;
-    const colors = ['#00ff99', '#00ffcc', '#33ff33', '#66ffff', '#00ff66']; // Verde
+    // const colors = ['#cc33ff', '#9966ff', '#ff33ff', '#bf00ff', '#d580ff']; //  ORIGINAL
+    // const colors = ['#ff3333', '#ff6666', '#ff0000', '#ff9999', '#ff4d4d']; // ! ROJO
+    const colors = ['#00ff99', '#00ffcc', '#33ff33', '#66ffff', '#00ff66']; // * VERDE
+    // const colors = ['#00ffff', '#00ccff', '#0099ff', '#0066ff', '#00aaff']; // ? NEON
 
     class Particle {
       x: number;
@@ -179,11 +214,38 @@ export class LoginComponent implements OnInit {
 
     function drawBackground() {
       if (!ctx) return;
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      const gradient = ctx.createLinearGradient(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+      //  ORIGINAL
+      // gradient.addColorStop(0, '#0a000a');
+      // gradient.addColorStop(0.3, '#1a001a');
+      // gradient.addColorStop(0.7, '#260026');
+      // gradient.addColorStop(1, '#330033');
+
+      // * VERDE
       gradient.addColorStop(0, '#000a05');
       gradient.addColorStop(0.3, '#001a0f');
       gradient.addColorStop(0.7, '#002617');
       gradient.addColorStop(1, '#003320');
+
+      // ! ROJO
+      // gradient.addColorStop(0, '#0a0000');
+      // gradient.addColorStop(0.3, '#1a0000');
+      // gradient.addColorStop(0.7, '#260000');
+      // gradient.addColorStop(1, '#330000');
+
+      // ? NEON
+      // gradient.addColorStop(0, '#001624');
+      // gradient.addColorStop(0.1, '#000a14');
+      // gradient.addColorStop(0.3, '#000305');
+      // gradient.addColorStop(0.5, '#000000');
+      // gradient.addColorStop(0.7, '#000305');
+      // gradient.addColorStop(0.9, '#000a14');
+      // gradient.addColorStop(1, '#001624');
 
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -199,7 +261,12 @@ export class LoginComponent implements OnInit {
 
           if (distance < 120) {
             ctx.beginPath();
-            const gradient = ctx.createLinearGradient(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+            const gradient = ctx.createLinearGradient(
+              particles[i].x,
+              particles[i].y,
+              particles[j].x,
+              particles[j].y
+            );
             gradient.addColorStop(0, particles[i].color);
             gradient.addColorStop(1, particles[j].color);
             ctx.strokeStyle = gradient;
@@ -212,13 +279,13 @@ export class LoginComponent implements OnInit {
       }
     }
 
-    const getMousePosition = (event: MouseEvent) => {
+    const getPosicionRaton = (event: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       this.mouseX = event.clientX - rect.left;
       this.mouseY = event.clientY - rect.top;
     };
 
-    canvas.addEventListener('mousemove', getMousePosition);
+    canvas.addEventListener('mousemove', getPosicionRaton);
 
     const animate = () => {
       drawBackground();
@@ -231,7 +298,6 @@ export class LoginComponent implements OnInit {
       requestAnimationFrame(animate);
     };
 
-    // Iniciar la animación inmediatamente
     animate();
   }
 }

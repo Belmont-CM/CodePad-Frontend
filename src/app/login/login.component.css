@@ -1,4 +1,4 @@
-/* SPINNER LOADING*/
+/* ? SPINNER LOADING*/
 @keyframes blinkCursor {
     50% {
       border-right-color: transparent;
@@ -97,7 +97,7 @@
     background-color: rgba(26, 26, 26, 0.5); /* Ajusta la opacidad */
   }
 
-  /* LETRAS RGB DE BIENVENIDA */ 
+  /* ? LETRAS RGB DE BIENVENIDA */ 
   @keyframes rgb-animation-smooth {
     0% {
         color: #ff0000;
