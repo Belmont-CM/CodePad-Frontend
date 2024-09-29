@@ -14,6 +14,8 @@ import {
   faMicrochip,
 } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { LoginService } from '../service/login.service'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.RotacionInformacion();
   }
 
-  constructor(private library: FaIconLibrary) {
+  constructor(private library: FaIconLibrary, private loginService: LoginService, private router: Router) {
     library.addIcons(
       faBug,
       faUser,
@@ -98,8 +100,30 @@ export class LoginComponent implements OnInit {
   ];
 
   onSubmit() {
-    // Manejar el inicio de sesión
+    const loginData = {
+      username: this.username, 
+      password: this.password
+    };
+  
+    this.loginService.postData('login/', loginData).subscribe({
+      next: (response) => {
+        console.log(response);
+        if (response.message === 'Login Correcto') {
+          localStorage.setItem('token', response.token); 
+          alert('Inicio de sesión exitoso.'); // Mensaje de éxito
+          this.router.navigate(['/dashboard']); 
+        } else {
+          alert('Credenciales incorrectas. Intenta nuevamente.');
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        alert('Error al realizar el login. Intenta nuevamente.');
+      }
+    });
   }
+  
+  
 
   crearUsuario() {
     // Aquí va la lógica para crear usuario

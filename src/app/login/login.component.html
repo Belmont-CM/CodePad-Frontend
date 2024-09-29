@@ -201,6 +201,7 @@
           <input
             class="w-full bg-gray-700 bg-opacity-50 text-white pl-10 pr-4 py-3 rounded-md"
             [(ngModel)]="username"
+            name="username"
             type="text"
             placeholder="Nombre de Usuario"
           />
@@ -213,6 +214,7 @@
           <input
             class="w-full bg-gray-700 bg-opacity-50 text-white pl-10 pr-10 py-3 rounded-md"
             [(ngModel)]="password"
+            name="password"
             [type]="showPassword ? 'text' : 'password'"
             placeholder="Contraseña"
           />
