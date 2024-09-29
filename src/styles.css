@@ -1,15 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
 /* General settings */
 * {
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none;
-    box-sizing: border-box;
-  }
-  
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
 html, body {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-  }
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
