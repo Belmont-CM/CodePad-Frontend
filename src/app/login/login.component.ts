@@ -105,13 +105,13 @@ export class LoginComponent implements OnInit {
       password: this.password
     };
   
-    this.loginService.postData('login/', loginData).subscribe({
+    this.loginService.postData('usuarios/login/', loginData).subscribe({
       next: (response) => {
         console.log(response);
-        if (response.message === 'Login Correcto') {
+        if (response.message === 'Login correcto') { // Verifica que el mensaje coincide
           localStorage.setItem('token', response.token); 
           alert('Inicio de sesión exitoso.'); // Mensaje de éxito
-          this.router.navigate(['/dashboard']); 
+          this.router.navigate(['/dashboard']); // Redirige al dashboard
         } else {
           alert('Credenciales incorrectas. Intenta nuevamente.');
         }
@@ -121,7 +121,7 @@ export class LoginComponent implements OnInit {
         alert('Error al realizar el login. Intenta nuevamente.');
       }
     });
-  }
+  }  
   
   
 
