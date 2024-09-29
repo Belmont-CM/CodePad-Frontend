@@ -1,15 +1,19 @@
-import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faBug, faUser, faLock, faEye, faEyeSlash, faChevronRight, faBell, faKeyboard } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements OnInit {
   @ViewChild('canvasElement', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   username: string = '';
   password: string = '';
   isRegistering: boolean = false;
+  email: string = '';
+  showLoader: boolean = false;
   showPassword: boolean = false;
   currentInfoIndex: number = 0;
   mouseX: number = 0;
@@ -18,7 +22,7 @@ export class LoginComponent implements AfterViewInit {
   systemInfo = [
     {
       title: "Novedades",
-      icon: "fa-bell",
+      icon: faBell,  // Cambiar a referencia directa
       items: [
         "Nueva interfaz de usuario más intuitiva",
         "Integración con servicios de terceros",
@@ -27,7 +31,7 @@ export class LoginComponent implements AfterViewInit {
     },
     {
       title: "Atajos de teclado",
-      icon: "fa-keyboard",
+      icon: faKeyboard,  // Cambiar a referencia directa
       items: [
         "Ctrl + N: Nuevo documento",
         "Ctrl + F: Búsqueda rápida",
@@ -36,7 +40,7 @@ export class LoginComponent implements AfterViewInit {
     },
     {
       title: "Bugs arreglados",
-      icon: "fa-bug",
+      icon: faBug,  // Cambiar a referencia directa
       items: [
         "Corregido error de carga en reportes",
         "Solucionado problema de sincronización",
@@ -44,15 +48,23 @@ export class LoginComponent implements AfterViewInit {
       ]
     }
   ];
-email: any;
+  
 
-  ngAfterViewInit() {
+  constructor(private library: FaIconLibrary) {
+    library.addIcons(faBug, faUser, faLock, faEye, faEyeSlash, faChevronRight, faBell, faKeyboard);
+  }
+
+  ngOnInit() {
     this.setupCanvas();
     this.startInfoRotation();
   }
 
   onSubmit() {
     // Manejar el inicio de sesión
+  }
+
+  onRegister() {
+    // Aquí va la lógica para crear usuario
   }
 
   togglePasswordVisibility() {
@@ -63,6 +75,15 @@ email: any;
     setInterval(() => {
       this.currentInfoIndex = (this.currentInfoIndex + 1) % this.systemInfo.length;
     }, 5000);
+  }
+
+  createUser() {
+    this.showLoader = true; // Muestra el spinner
+    this.isRegistering = false; // Oculta el formulario de inicio de sesión
+    setTimeout(() => {
+      this.showLoader = false; // Oculta el spinner
+      this.isRegistering = true; // Muestra el formulario de registro
+    }, 4000); // Cambia después de 3 segundos
   }
   
   setupCanvas() { 
@@ -81,12 +102,7 @@ email: any;
 
     const particles: Particle[] = [];
     const particleCount = 150;
-    //  const colors = ['#cc33ff', '#9966ff', '#ff33ff', '#bf00ff', '#d580ff']; //  ORIGINAL
-    //  const colors = ['#ff3333', '#ff6666', '#ff0000', '#ff9999', '#ff4d4d']; // ! ROJO
-     const colors = ['#00ff99', '#00ffcc', '#33ff33', '#66ffff', '#00ff66']; // * VERDE
-    //  const colors = ['#00ffff', '#00ccff', '#0099ff', '#0066ff', '#00aaff']; // ? NEON
-
-
+    const colors = ['#00ff99', '#00ffcc', '#33ff33', '#66ffff', '#00ff66']; // Verde
 
     class Particle {
       x: number;
@@ -95,7 +111,7 @@ email: any;
       vy: number;
       radius: number;
       color: string;
-      maxSpeed: number = .7; // Velocidad máxima de las partículas (ajustable)
+      maxSpeed: number = 0.7;
 
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -107,42 +123,37 @@ email: any;
       }
 
       draw() {
-        ctx!.beginPath();
-        ctx!.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx!.fillStyle = this.color;
-        ctx!.fill();
+        if (!ctx) return;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
       }
 
       update(mouseX: number, mouseY: number) {
         this.x += this.vx;
         this.y += this.vy;
 
-        // Detectar bordes del canvas
         if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
         if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
-        // * Lógica de interacción con el mouse
         const dx = this.x - mouseX;
         const dy = this.y - mouseY;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        const maxDistance = 100; // Rango de influencia del ratón
+        const maxDistance = 100;
 
         if (distance < maxDistance) {
-          // Cuanto más cerca esté del ratón, mayor es la fuerza de repulsión
-          const force = (maxDistance - distance) / maxDistance; 
-          const angle = Math.atan2(dy, dx); 
+          const force = (maxDistance - distance) / maxDistance;
+          const angle = Math.atan2(dy, dx);
 
-          // Reducimos la fuerza de repulsión
-          const repulsionStrength = 1.55; // Factor para hacer el movimiento más lento
+          const repulsionStrength = 1.55;
           this.vx += repulsionStrength * force * Math.cos(angle);
           this.vy += repulsionStrength * force * Math.sin(angle);
         }
 
-        // Limitar la velocidad de las partículas
         this.limitSpeed();
       }
 
-      // Función para limitar la velocidad de las partículas
       limitSpeed() {
         const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
         if (speed > this.maxSpeed) {
@@ -156,75 +167,53 @@ email: any;
       particles.push(new Particle());
     }
 
-    function drawBackground() { 
-      const gradient = ctx!.createLinearGradient(0, 0, canvas.width, canvas.height);
-      //  ORIGINAL
-      // gradient.addColorStop(0, '#0a000a');    
-      // gradient.addColorStop(0.3, '#1a001a');  
-      // gradient.addColorStop(0.7, '#260026');  
-      // gradient.addColorStop(1, '#330033');    
+    function drawBackground() {
+      if (!ctx) return;
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, '#000a05');
+      gradient.addColorStop(0.3, '#001a0f');
+      gradient.addColorStop(0.7, '#002617');
+      gradient.addColorStop(1, '#003320');
 
-      // * VERDE
-      gradient.addColorStop(0, '#000a05');    
-      gradient.addColorStop(0.3, '#001a0f');  
-      gradient.addColorStop(0.7, '#002617');  
-      gradient.addColorStop(1, '#003320');    
-
-      // ! ROJO
-      // gradient.addColorStop(0, '#0a0000');    
-      // gradient.addColorStop(0.3, '#1a0000');  
-      // gradient.addColorStop(0.7, '#260000');  
-      // gradient.addColorStop(1, '#330000');    
-
-      // ? NEON
-      // gradient.addColorStop(0, '#001624');  
-      // gradient.addColorStop(0.1, '#000a14'); 
-      // gradient.addColorStop(0.3, '#000305');  
-      // gradient.addColorStop(0.5, '#000000'); 
-      // gradient.addColorStop(0.7, '#000305');  
-      // gradient.addColorStop(0.9, '#000a14');  
-      // gradient.addColorStop(1, '#001624');    
-
-      ctx!.fillStyle = gradient;
-      ctx!.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    function drawLines() { 
+    function drawLines() {
+      if (!ctx) return;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 120) { 
-            ctx!.beginPath();
-            const gradient = ctx!.createLinearGradient(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+          if (distance < 120) {
+            ctx.beginPath();
+            const gradient = ctx.createLinearGradient(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
             gradient.addColorStop(0, particles[i].color);
             gradient.addColorStop(1, particles[j].color);
-            ctx!.strokeStyle = gradient;
-            ctx!.lineWidth = 2;
-            ctx!.moveTo(particles[i].x, particles[i].y);
-            ctx!.lineTo(particles[j].x, particles[j].y);
-            ctx!.stroke();
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 2;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
           }
         }
       }
     }
 
-    // Función para obtener la posición del ratón
     const getMousePosition = (event: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       this.mouseX = event.clientX - rect.left;
       this.mouseY = event.clientY - rect.top;
     };
 
-    // Escuchar el evento de movimiento del ratón
     canvas.addEventListener('mousemove', getMousePosition);
 
-    const animate = () => { 
+    const animate = () => {
       drawBackground();
       particles.forEach((particle) => {
-        particle.update(this.mouseX, this.mouseY); // Pasamos la posición del ratón
+        particle.update(this.mouseX, this.mouseY);
         particle.draw();
       });
 
@@ -232,6 +221,7 @@ email: any;
       requestAnimationFrame(animate);
     };
 
+    // Iniciar la animación inmediatamente
     animate();
   }
 }

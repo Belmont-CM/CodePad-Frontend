@@ -1,72 +1,98 @@
-/* Estilos para el fondo de canvas */
-canvas {
-position: fixed;
-top: 0;
-left: 0;
-width: 100vw;
-height: 100vh;
-z-index: 1;
-}
-
-/* Ajustes para los componentes principales */
-.content-wrapper {
-position: relative;
-z-index: 2;
-display: flex;
-flex-direction: row;
-}
-
-/* Estilo para el contenedor principal */
-.min-h-screen {
-background: linear-gradient(to bottom right, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
-display: flex;
-flex-direction: column;
-}
-
-/* Estilos para los contenedores izquierdo y derecho */
-.content-wrapper > div {
-display: flex;
-flex-direction: column;
-}
-.content-wrapper > div:first-child {
-width: 65%;
-padding-right: 2rem;
-}
-.content-wrapper > div:last-child {
-width: 35%;
-}
-
-/* Estilo para los inputs */
-input {
-transition: all 0.3s ease;
-}
-input:focus {
-outline: none;
-box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-}
-
-/* Estilo para los botones */
-button {
-transition: all 0.3s ease;
-}
-button:hover {
-transform: translateY(-2px);
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilo para el logo */
-.rounded-full {
-box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .content-wrapper {
-    flex-direction: column;
+@keyframes blinkCursor {
+    50% {
+      border-right-color: transparent;
+    }
   }
-  .content-wrapper > div:first-child,
-  .content-wrapper > div:last-child {
-    width: 100%;
-    padding-right: 0;
+  
+  @keyframes typeAndDelete {
+    0%,
+    10% {
+      width: 0;
+    }
+    45%,
+    55% {
+      width: 6.2em; /* Ajusta el ancho según el contenido */
+    }
+    90%,
+    100% {
+      width: 0;
+    }
   }
-}
+  
+  .terminal-loader {
+    border: 0.1em solid #333;
+    background-color: #1a1a1a;
+    color: #0f0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1em;
+    padding: 1.5em 1em;
+    width: 12em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  .terminal-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1.5em;
+    background-color: #333;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 0 0.4em;
+    box-sizing: border-box;
+  }
+  
+  .terminal-controls {
+    float: right;
+  }
+  
+  .control {
+    display: inline-block;
+    width: 0.6em;
+    height: 0.6em;
+    margin-left: 0.4em;
+    border-radius: 50%;
+    background-color: #777;
+  }
+  
+  .control.close {
+    background-color: #e33;
+  }
+  
+  .control.minimize {
+    background-color: #ee0;
+  }
+  
+  .control.maximize {
+    background-color: #0b0;
+  }
+  
+  .terminal-title {
+    float: left;
+    line-height: 1.5em;
+    color: #eee;
+  }
+  
+  .text {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 0.2em solid green; /* Cursor */
+    animation: typeAndDelete 4s steps(11) infinite,
+      blinkCursor 0.5s step-end infinite alternate;
+    margin-top: 1.5em;
+  }
+  
+  .backdrop-blur-md {
+    backdrop-filter: blur(8px); /* Ajusta el nivel de borrosidad aquí */
+  }
+  
+  .bg-opacity-50 {
+    background-color: rgba(26, 26, 26, 0.5); /* Ajusta la opacidad */
+  }
+  
