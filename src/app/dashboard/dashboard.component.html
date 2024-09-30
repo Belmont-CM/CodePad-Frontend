@@ -1,0 +1,110 @@
+<div class="min-h-screen bg-gray-900 text-white flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 p-6 flex flex-col">
+      <div class="flex items-center mb-8">
+        <div class="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center mr-3">
+          <fa-icon [icon]="faBolt" class="text-black"></fa-icon>
+        </div>
+        <h1 class="text-2xl font-bold">CodePad</h1>
+      </div>
+      <nav class="flex-1">
+        <ul class="space-y-4">
+          <li><a href="#" class="flex items-center text-blue-400 hover:text-blue-300">
+            <fa-icon [icon]="faFileAlt" class="mr-3"></fa-icon> Notas
+          </a></li>
+          <li><a href="#" class="flex items-center text-blue-400 hover:text-blue-300">
+            <fa-icon [icon]="faCode" class="mr-3"></fa-icon> Código
+          </a></li>
+          <li><a href="#" class="flex items-center text-blue-400 hover:text-blue-300">
+            <fa-icon [icon]="faBell" class="mr-3"></fa-icon> Notificaciones
+          </a></li>
+          <li><a href="#" class="flex items-center text-blue-400 hover:text-blue-300">
+            <fa-icon [icon]="faTag" class="mr-3"></fa-icon> Etiquetas
+          </a></li>
+          <li><a href="#" class="flex items-center text-blue-400 hover:text-blue-300">
+            <fa-icon [icon]="faTrash" class="mr-3"></fa-icon> Papelera
+          </a></li>
+          <li><a href="#" class="flex items-center text-blue-400 hover:text-blue-300">
+            <fa-icon [icon]="faCog" class="mr-3"></fa-icon> Configuración
+          </a></li>
+        </ul>
+      </nav>
+      <div class="mt-auto space-y-4">
+        <a href="#" class="flex items-center text-blue-400 hover:text-blue-300">
+          <fa-icon [icon]="faUser" class="mr-3"></fa-icon> Perfil
+        </a>
+        <button (click)="handleLogout()" class="flex items-center text-red-400 hover:text-red-300 w-full">
+          <fa-icon [icon]="faSignOutAlt" class="mr-3"></fa-icon> Cerrar Sesión
+        </button>
+      </div>
+    </aside>
+  
+    <!-- Main Content -->
+    <main class="flex-1 p-8 overflow-y-auto">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-bold">Bienvenido a CodePad</h2>
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="Buscar notas o código..."
+            class="bg-gray-800 text-white pl-10 pr-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            [(ngModel)]="searchQuery"
+          >
+          <fa-icon [icon]="faSearch" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-500"></fa-icon>
+        </div>
+      </div>
+  
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div class="bg-gray-800 p-6 rounded-lg">
+          <h3 class="text-xl font-semibold mb-4 flex items-center">
+            <fa-icon [icon]="faFileAlt" class="mr-2"></fa-icon> Notas Recientes
+          </h3>
+          <ul class="space-y-2">
+            <li *ngFor="let note of recentNotes">
+              <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                <fa-icon [icon]="faClock" class="mr-2"></fa-icon> {{note}}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg">
+          <h3 class="text-xl font-semibold mb-4 flex items-center">
+            <fa-icon [icon]="faCode" class="mr-2"></fa-icon> Código Reciente
+          </h3>
+          <ul class="space-y-2">
+            <li *ngFor="let code of recentCode">
+              <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                <fa-icon [icon]="faClock" class="mr-2"></fa-icon> {{code}}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg">
+          <h3 class="text-xl font-semibold mb-4 flex items-center">
+            <fa-icon [icon]="faTag" class="mr-2"></fa-icon> Etiquetas Populares
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            <span *ngFor="let tag of popularTags" class="bg-blue-800 text-blue-200 px-2 py-1 rounded-full text-sm">
+              {{tag}}
+            </span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="bg-gray-800 p-6 rounded-lg mb-8">
+        <h3 class="text-xl font-semibold mb-4">Actividad Reciente</h3>
+        <ul class="space-y-4">
+          <li *ngFor="let activity of recentActivity" class="flex items-center justify-between">
+            <span>{{activity.action}}</span>
+            <span class="text-blue-500 text-sm">{{activity.time}}</span>
+          </li>
+        </ul>
+      </div>
+  
+      <div class="fixed bottom-8 right-8">
+        <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold p-4 rounded-full shadow-lg flex items-center justify-center">
+          <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+      </div>
+    </main>
+  </div>

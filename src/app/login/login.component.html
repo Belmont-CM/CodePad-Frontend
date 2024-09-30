@@ -228,12 +228,25 @@
             ></fa-icon>
           </button>
         </div>
+        <form (ngSubmit)="onSubmit()">
+          <!-- Tus campos de formulario aquí -->
+        
+          <button
+            type="submit"
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-md flex items-center justify-center"
+          >
+            <span>Iniciar Sesión</span>
+            <fa-icon [icon]="['fas', 'chevron-right']" class="ml-2"></fa-icon>
+          </button>
+        </form>
+        
+        <!-- Botón de prueba para Toastr -->
         <button
-          (click)="onSubmit()"
-          class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-md flex items-center justify-center"
+          (click)="testToastr()"
+          class="w-full mt-4 bg-green-500 hover:bg-green-600 text-white py-3 rounded-md flex items-center justify-center"
         >
-          <span>Iniciar Sesión</span>
-          <fa-icon [icon]="['fas', 'chevron-right']" class="ml-2"></fa-icon>
+          <span>Probar Toastr</span>
+          <fa-icon [icon]="['fas', 'bell']" class="ml-2"></fa-icon>
         </button>
         <button
           (click)="crearUsuarioVisibilidad()"

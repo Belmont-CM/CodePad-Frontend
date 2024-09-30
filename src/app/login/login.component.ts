@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {
   faBug,
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.RotacionInformacion();
   }
 
-  constructor(private library: FaIconLibrary, private loginService: LoginService, private router: Router) {
+  constructor(private library: FaIconLibrary, private loginService: LoginService, private router: Router, private toastr: ToastrService) {
     library.addIcons(
       faBug,
       faUser,
@@ -101,29 +102,57 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const loginData = {
-      username: this.username, 
+      username: this.username,
       password: this.password
     };
-  
+
     this.loginService.postData('usuarios/login/', loginData).subscribe({
       next: (response) => {
-        console.log(response);
-        if (response.message === 'Login correcto') { // Verifica que el mensaje coincide
-          localStorage.setItem('token', response.token); 
-          alert('Inicio de sesión exitoso.'); // Mensaje de éxito
-          this.router.navigate(['/dashboard']); // Redirige al dashboard
+        console.log('Respuesta del servidor:', response); // Para depuración
+        if (response && response.message === 'Login correcto') {
+          localStorage.setItem('token', response.token);
+          this.toastr.success('Inicio de sesión exitoso', 'Éxito', {
+            positionClass: 'toast-bottom-right',
+            timeOut: 3000,
+            closeButton: true,
+            progressBar: true
+          });
+          this.router.navigate(['/dashboard']);
         } else {
-          alert('Credenciales incorrectas. Intenta nuevamente.');
+          this.toastr.error('Credenciales incorrectas', 'Error', {
+            positionClass: 'toast-bottom-right',
+            timeOut: 3000,
+            closeButton: true,
+            progressBar: true
+          });
         }
       },
       error: (err) => {
-        console.log(err);
-        alert('Error al realizar el login. Intenta nuevamente.');
+        console.error('Error de login:', err); // Para depuración
+        this.toastr.error('Error al realizar el login', 'Error', {
+          positionClass: 'toast-bottom-right',
+          timeOut: 3000,
+          closeButton: true,
+          progressBar: true
+        });
       }
     });
-  }  
-  
-  
+  }
+
+  testToastr() {
+    this.toastr.success('Esto es una prueba de éxito', 'Toastr funciona!', {
+      positionClass: 'toast-bottom-right',
+      timeOut: 3000,
+      closeButton: true,
+      progressBar: true
+    });
+    this.toastr.error('Esto es una prueba de error', 'Error de prueba', {
+      positionClass: 'toast-bottom-right',
+      timeOut: 3000,
+      closeButton: true,
+      progressBar: true
+    });
+  }
 
   crearUsuario() {
     // Aquí va la lógica para crear usuario

@@ -126,4 +126,33 @@
     animation: rgb-animation-smooth 10s infinite linear;
 }
 
-  
+/* ? Ventana Flotante (INICIAR SESION)*/
+/* Estilos globales para todas las notificaciones Toastr */
+.toast-container {
+  z-index: 1000000 !important; /* Un valor muy alto para asegurar que esté por encima de todo */
+}
+
+/* Estilos específicos para cada tipo de notificación */
+.toast-success,
+.toast-error,
+.toast-info,
+.toast-warning {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+}
+
+.toast-success {
+  background-color: #51A351;
+}
+
+.toast-error {
+  background-color: #BD362F;
+}
+
+.toast-info {
+  background-color: #2F96B4;
+}
+
+.toast-warning {
+  background-color: #F89406;
+}
