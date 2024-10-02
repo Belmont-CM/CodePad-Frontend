@@ -105,22 +105,26 @@ export class LoginComponent implements OnInit {
       username: this.username,
       password: this.password
     };
-
+  
     this.loginService.postData('usuarios/login/', loginData).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); // Para depuración
         if (response && response.message === 'Login correcto') {
           localStorage.setItem('token', response.token);
           this.toastr.success('Inicio de sesión exitoso', 'Éxito', {
-            positionClass: 'toast-bottom-right',
+            positionClass: 'toast-top-right', // Cambiado a la parte superior derecha
             timeOut: 3000,
             closeButton: true,
             progressBar: true
           });
-          this.router.navigate(['/dashboard']);
+  
+          // Redirigir al dashboard después de 3 segundos (después de que la notificación desaparezca)
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+          }, 3000); // 3000ms coincide con el tiempo de la notificación
         } else {
           this.toastr.error('Credenciales incorrectas', 'Error', {
-            positionClass: 'toast-bottom-right',
+            positionClass: 'toast-top-right', // Ajustado para mantener consistencia
             timeOut: 3000,
             closeButton: true,
             progressBar: true
@@ -130,7 +134,7 @@ export class LoginComponent implements OnInit {
       error: (err) => {
         console.error('Error de login:', err); // Para depuración
         this.toastr.error('Error al realizar el login', 'Error', {
-          positionClass: 'toast-bottom-right',
+          positionClass: 'toast-top-right', // Ajustado para mantener consistencia
           timeOut: 3000,
           closeButton: true,
           progressBar: true
@@ -138,21 +142,7 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-
-  testToastr() {
-    this.toastr.success('Esto es una prueba de éxito', 'Toastr funciona!', {
-      positionClass: 'toast-bottom-right',
-      timeOut: 3000,
-      closeButton: true,
-      progressBar: true
-    });
-    this.toastr.error('Esto es una prueba de error', 'Error de prueba', {
-      positionClass: 'toast-bottom-right',
-      timeOut: 3000,
-      closeButton: true,
-      progressBar: true
-    });
-  }
+  
 
   crearUsuario() {
     // Aquí va la lógica para crear usuario
