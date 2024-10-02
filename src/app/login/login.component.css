@@ -132,6 +132,11 @@
   z-index: 1000000 !important; /* Un valor muy alto para asegurar que esté por encima de todo */
 }
 
+.toast-top-right {
+  top: 20px; /* Ajusta el valor para mayor separación */
+  right: 20px; /* Ajusta el valor para mayor separación */
+}
+
 /* Estilos específicos para cada tipo de notificación */
 .toast-success,
 .toast-error,

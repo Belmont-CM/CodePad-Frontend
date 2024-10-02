@@ -28,7 +28,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     FontAwesomeModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-bottom-right',
+      positionClass: 'toast-top-right',
       preventDuplicates: true,
       closeButton: true,
       progressBar: true,
