@@ -15,8 +15,10 @@ import {
   faMicrochip,
 } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { LoginService } from '../service/login.service'; 
+import { LoginService } from '../service/login.service';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -28,11 +30,19 @@ export class LoginComponent implements OnInit {
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
   ngOnInit() {
-    this.setupCanvas();
-    this.RotacionInformacion();
+    if (isPlatformBrowser(this.platformId)) {
+      this.setupCanvas();
+      this.RotacionInformacion();
+    }
   }
 
-  constructor(private library: FaIconLibrary, private loginService: LoginService, private router: Router, private toastr: ToastrService) {
+  constructor(
+    private library: FaIconLibrary,
+    private loginService: LoginService,
+    private router: Router,
+    private toastr: ToastrService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     library.addIcons(
       faBug,
       faUser,
@@ -103,9 +113,9 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const loginData = {
       username: this.username,
-      password: this.password
+      password: this.password,
     };
-  
+
     this.loginService.postData('usuarios/login/', loginData).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); // Para depuración
@@ -115,9 +125,9 @@ export class LoginComponent implements OnInit {
             positionClass: 'toast-top-right', // Cambiado a la parte superior derecha
             timeOut: 3000,
             closeButton: true,
-            progressBar: true
+            progressBar: true,
           });
-  
+
           // Redirigir al dashboard después de 3 segundos (después de que la notificación desaparezca)
           setTimeout(() => {
             this.router.navigate(['/dashboard']);
@@ -127,7 +137,7 @@ export class LoginComponent implements OnInit {
             positionClass: 'toast-top-right', // Ajustado para mantener consistencia
             timeOut: 3000,
             closeButton: true,
-            progressBar: true
+            progressBar: true,
           });
         }
       },
@@ -137,12 +147,11 @@ export class LoginComponent implements OnInit {
           positionClass: 'toast-top-right', // Ajustado para mantener consistencia
           timeOut: 3000,
           closeButton: true,
-          progressBar: true
+          progressBar: true,
         });
-      }
+      },
     });
   }
-  
 
   crearUsuario() {
     // Aquí va la lógica para crear usuario
@@ -173,6 +182,8 @@ export class LoginComponent implements OnInit {
   }
 
   setupCanvas() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;

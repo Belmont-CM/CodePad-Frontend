@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faUser, faLock, faEye, faEyeSlash, faCheckCircle, faPlus, faTimes, faEnvelope, faCheckDouble, faBolt, faMicrochip, faFileAlt, faCode, faBell, faTag, faTrash, faCog, faSignOutAlt, faSearch, faClock } from '@fortawesome/free-solid-svg-icons';
-import { HttpClientModule } from '@angular/common/http'; 
+import { provideHttpClient, withFetch } from '@angular/common/http'; 
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
@@ -20,11 +20,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   ],
   imports: [
     BrowserModule,
-    
     AppRoutingModule,
-    
     FormsModule,
-    HttpClientModule,
     FontAwesomeModule,
     ToastrModule.forRoot({
       timeOut: 3000,
@@ -35,10 +32,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
       maxOpened: 3,
       autoDismiss: true,
       enableHtml: true,
-    })
+    }),
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     provideClientHydration(),
+    provideHttpClient(withFetch()) 
   ],
   bootstrap: [AppComponent]
 })
