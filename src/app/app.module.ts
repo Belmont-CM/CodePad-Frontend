@@ -11,12 +11,16 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TemplatesCanvasComponent } from './plantillas/templates-canvas/templates-canvas.component';
+import { PlantillaNovaComponent } from './plantillas/plantilla-nova/plantilla-nova.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
+    TemplatesCanvasComponent,
+    PlantillaNovaComponent,
   ],
   imports: [
     BrowserModule,
