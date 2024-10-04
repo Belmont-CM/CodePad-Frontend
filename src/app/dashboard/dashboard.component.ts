@@ -10,7 +10,6 @@ import {
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  // Font Awesome icons
   faBolt = faBolt;
   faFileAlt = faFileAlt;
   faCode = faCode;
@@ -23,6 +22,8 @@ export class DashboardComponent {
   faSearch = faSearch;
   faClock = faClock;
   faPlus = faPlus;
+
+  isSidebarOpen: boolean = true;
 
   searchQuery: string = '';
   recentNotes: string[] = ['Idea para nuevo proyecto', 'Notas de la reunión', 'Lista de tareas', 'Recordatorios'];
@@ -37,6 +38,9 @@ export class DashboardComponent {
 
   handleLogout() {
     console.log('Cerrando sesión...');
-    // Implement logout logic here
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 }
