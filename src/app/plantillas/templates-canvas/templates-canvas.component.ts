@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PlantillaNovaComponent } from '../../plantillas/plantilla-nova/plantilla-nova.component'; 
+import { PlantillaEspacioComponent } from '../../plantillas/plantilla-espacio/plantilla-espacio.component';
 
 @Component({
   selector: 'app-templates-canvas',

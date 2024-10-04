@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TemplatesCanvasComponent } from './plantillas/templates-canvas/templates-canvas.component';
 import { PlantillaNovaComponent } from './plantillas/plantilla-nova/plantilla-nova.component';
+import { PlantillaEspacioComponent } from './plantillas/plantilla-espacio/plantilla-espacio.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { PlantillaNovaComponent } from './plantillas/plantilla-nova/plantilla-no
     DashboardComponent,
     TemplatesCanvasComponent,
     PlantillaNovaComponent,
+    PlantillaEspacioComponent,
   ],
   imports: [
     BrowserModule,
