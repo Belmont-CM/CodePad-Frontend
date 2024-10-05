@@ -1,31 +1,43 @@
-<app-templates-canvas></app-templates-canvas>
+<div class="flex h-screen bg-gray-900 text-white overflow-hidden">
+  <!-- Templates Canvas (Fondo con efecto) -->
+  <app-templates-canvas class="absolute inset-0"></app-templates-canvas>
 
-<app-sidenav
-  [isOpen]="isSidenavOpen"
-  (toggleSidenav)="toggleSidenav()"
-  (logout)="handleLogout()">
-</app-sidenav>
+  <!-- Sidenav -->
+  <app-sidenav
+    [isOpen]="isSidenavOpen"
+    (toggleSidenav)="toggleSidenav()"
+    (logout)="handleLogout()">
+  </app-sidenav>
 
-<div class="p-6 bg-gray-950">
-  <h2 class="text-2xl font-bold mb-6 text-green-400">Configuración</h2>
-  <div class="space-y-6">
-    <!-- General Configuration -->
-    <div class="bg-gray-900 text-gray-100 rounded-lg shadow-lg p-6 mb-6">
-      <h3 class="text-xl font-semibold mb-4 text-green-400">Configuración General</h3>
+  <!-- Main Content -->
+  <main class="flex-1 p-6 overflow-y-auto">
+    <div class="mb-6 bg-gray-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-gray-700/30">
+      <h2 class="text-2xl font-bold from-blue-400 to-indigo-400 mb-3">Configuración</h2>
+    </div>
+
+    <!-- Configuración General -->
+    <div class="bg-gray-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-gray-700/30 hover:border-gray-600/50 transition-all duration-200 mb-6">
+      <h3 class="text-lg font-semibold mb-3 text-blue-400">
+        <fa-icon [icon]="faCogs" class="mr-2"></fa-icon> Configuración General
+      </h3>
       <div class="space-y-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="text-green-400" [ngClass]="{'fa-moon': darkMode, 'fa-sun': !darkMode}"></i>
+            <fa-icon [icon]="darkMode ? faMoon : faSun" class="text-blue-400"></fa-icon>
             <span>Tema Oscuro</span>
           </div>
-          <input type="checkbox" [(ngModel)]="darkMode" (change)="toggleDarkMode()" class="toggle toggle-success bg-green-700" />
+          <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+            <input type="checkbox" name="toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                   [checked]="darkMode" (change)="toggleDarkMode()"/>
+            <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+          </div>
         </div>
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="fa-globe text-green-400"></i>
+            <fa-icon [icon]="faGlobe" class="text-blue-400"></fa-icon>
             <span>Idioma</span>
           </div>
-          <select [(ngModel)]="language" (change)="changeLanguage(language)" class="select select-bordered w-[180px] bg-gray-800 border-green-700">
+          <select [(ngModel)]="language" class="bg-gray-700 border-gray-600 text-white rounded-md">
             <option value="es">Español</option>
             <option value="en">English</option>
             <option value="fr">Français</option>
@@ -33,52 +45,67 @@
         </div>
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="fa-bell text-green-400"></i>
+            <fa-icon [icon]="faBell" class="text-blue-400"></fa-icon>
             <span>Notificaciones</span>
           </div>
-          <input type="checkbox" [(ngModel)]="notifications" (change)="toggleNotifications()" class="toggle toggle-success bg-green-700" />
+          <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+            <input type="checkbox" name="notificationToggle" id="notificationToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                   [checked]="notifications" (change)="toggleNotifications()"/>
+            <label for="notificationToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Editor Configuration -->
-    <div class="bg-gray-900 text-gray-100 rounded-lg shadow-lg p-6 mb-6">
-      <h3 class="text-xl font-semibold mb-4 text-green-400">Configuración del Editor</h3>
+    <!-- Configuración del Editor -->
+    <div class="bg-gray-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-gray-700/30 hover:border-gray-600/50 transition-all duration-200 mb-6">
+      <h3 class="text-lg font-semibold mb-3 text-blue-400">
+        <fa-icon [icon]="faCode" class="mr-2"></fa-icon> Configuración del Editor
+      </h3>
       <div class="space-y-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="fa-code text-green-400"></i>
+            <fa-icon [icon]="faCode" class="text-blue-400"></fa-icon>
             <span>Tamaño de Fuente</span>
           </div>
-          <input type="range" min="8" max="24" [(ngModel)]="fontSize" (change)="changeFontSize(fontSize)" class="range range-success w-[200px]" />
+          <input type="range" min="8" max="24" step="1" [(ngModel)]="fontSize" class="w-[200px]">
         </div>
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="fa-bolt text-green-400"></i>
+            <fa-icon [icon]="faBolt" class="text-blue-400"></fa-icon>
             <span>Autocompletado</span>
           </div>
-          <input type="checkbox" checked disabled class="toggle toggle-success bg-green-700" />
+          <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+            <input type="checkbox" name="autocompleteToggle" id="autocompleteToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" checked/>
+            <label for="autocompleteToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+          </div>
         </div>
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="fa-eye text-green-400"></i>
+            <fa-icon [icon]="faEye" class="text-blue-400"></fa-icon>
             <span>Vista Previa en Vivo</span>
           </div>
-          <input type="checkbox" [(ngModel)]="livePreview" (change)="toggleLivePreview()" class="toggle toggle-success bg-green-700" />
+          <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+            <input type="checkbox" name="livePreviewToggle" id="livePreviewToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                   [checked]="livePreview" (change)="toggleLivePreview()"/>
+            <label for="livePreviewToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Appearance Configuration -->
-    <div class="bg-gray-900 text-gray-100 rounded-lg shadow-lg p-6 mb-6">
-      <h3 class="text-xl font-semibold mb-4 text-green-400">Configuración de Apariencia</h3>
+    <!-- Configuración de Apariencia -->
+    <div class="bg-gray-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-gray-700/30 hover:border-gray-600/50 transition-all duration-200 mb-6">
+      <h3 class="text-lg font-semibold mb-3 text-blue-400">
+        <fa-icon [icon]="faPalette" class="mr-2"></fa-icon> Configuración de Apariencia
+      </h3>
       <div class="space-y-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="fa-palette text-green-400"></i>
+            <fa-icon [icon]="faPalette" class="text-blue-400"></fa-icon>
             <span>Tema del Editor</span>
           </div>
-          <select [(ngModel)]="theme" (change)="changeTheme(theme)" class="select select-bordered w-[180px] bg-gray-800 border-green-700">
+          <select [(ngModel)]="theme" class="bg-gray-700 border-gray-600 text-white rounded-md">
             <option value="neon">Neón</option>
             <option value="cyberpunk">Cyberpunk</option>
             <option value="matrix">Matrix</option>
@@ -86,44 +113,54 @@
         </div>
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="fa-sliders text-green-400"></i>
+            <fa-icon [icon]="faSliders" class="text-blue-400"></fa-icon>
             <span>Personalizar Colores</span>
           </div>
-          <button class="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-600 transition-colors">
+          <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 transition-colors">
             Personalizar
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Advanced Configuration -->
-    <div class="bg-gray-900 text-gray-100 rounded-lg shadow-lg p-6">
-      <h3 class="text-xl font-semibold mb-4 text-green-400">Configuración Avanzada</h3>
+    <!-- Configuración Avanzada -->
+    <div class="bg-gray-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-gray-700/30 hover:border-gray-600/50 transition-all duration-200">
+      <h3 class="text-lg font-semibold mb-3 text-blue-400">
+        <fa-icon [icon]="faLaptop" class="mr-2"></fa-icon> Configuración Avanzada
+      </h3>
       <div class="space-y-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="fa-laptop text-green-400"></i>
+            <fa-icon [icon]="faLaptop" class="text-blue-400"></fa-icon>
             <span>Autoguardado</span>
           </div>
-          <input type="checkbox" [(ngModel)]="autoSave" (change)="toggleAutoSave()" class="toggle toggle-success bg-green-700" />
+          <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+            <input type="checkbox" name="autoSaveToggle" id="autoSaveToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                   [checked]="autoSave" (change)="toggleAutoSave()"/>
+            <label for="autoSaveToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+          </div>
         </div>
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="fa-cloud text-green-400"></i>
+            <fa-icon [icon]="faCloud" class="text-blue-400"></fa-icon>
             <span>Sincronización en la Nube</span>
           </div>
-          <input type="checkbox" [(ngModel)]="cloudSync" (change)="toggleCloudSync()" class="toggle toggle-success bg-green-700" />
+          <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+            <input type="checkbox" name="cloudSyncToggle" id="cloudSyncToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                   [checked]="cloudSync" (change)="toggleCloudSync()"/>
+            <label for="cloudSyncToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+          </div>
         </div>
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <i class="fa-lock text-green-400"></i>
+            <fa-icon [icon]="faLock" class="text-blue-400"></fa-icon>
             <span>Cambiar Contraseña</span>
           </div>
-          <button class="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-600 transition-colors">
+          <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 transition-colors">
             Cambiar
           </button>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </div>
