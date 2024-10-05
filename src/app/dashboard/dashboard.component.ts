@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { 
-  faBolt, faFileAlt, faCode, faBell, faTag, faTrash, 
-  faCog, faUser, faSignOutAlt, faSearch, faClock, faPlus 
+import {
+  faSearch, faClock, faFileAlt, faCode, faTag, faPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -10,21 +9,14 @@ import {
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  faBolt = faBolt;
-  faFileAlt = faFileAlt;
-  faCode = faCode;
-  faBell = faBell;
-  faTag = faTag;
-  faTrash = faTrash;
-  faCog = faCog;
-  faUser = faUser;
-  faSignOutAlt = faSignOutAlt;
   faSearch = faSearch;
   faClock = faClock;
+  faFileAlt = faFileAlt;
+  faCode = faCode;
+  faTag = faTag;
   faPlus = faPlus;
 
-  isSidebarOpen: boolean = true;
-
+  isSidenavOpen: boolean = true;
   searchQuery: string = '';
   recentNotes: string[] = ['Idea para nuevo proyecto', 'Notas de la reunión', 'Lista de tareas', 'Recordatorios'];
   recentCode: string[] = ['React Component', 'Python Script', 'SQL Query', 'CSS Animation'];
@@ -40,7 +32,7 @@ export class DashboardComponent {
     console.log('Cerrando sesión...');
   }
 
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
+  toggleSidenav() {
+    this.isSidenavOpen = !this.isSidenavOpen;
   }
 }
