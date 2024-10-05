@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router'; 
 import {
   faBolt, faFileAlt, faCode, faBell, faTag, faTrash,
   faCog, faUser, faSignOutAlt
@@ -24,11 +25,16 @@ export class SidenavComponent {
   faUser = faUser;
   faSignOutAlt = faSignOutAlt;
 
+  constructor(private router: Router) {} 
   onToggleSidenav() {
     this.toggleSidenav.emit();
   }
 
   onLogout() {
     this.logout.emit();
+  }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
   }
 }

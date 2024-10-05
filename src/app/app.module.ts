@@ -15,6 +15,7 @@ import { TemplatesCanvasComponent } from './plantillas/templates-canvas/template
 import { PlantillaNovaComponent } from './plantillas/plantilla-nova/plantilla-nova.component';
 import { PlantillaEspacioComponent } from './plantillas/plantilla-espacio/plantilla-espacio.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     PlantillaNovaComponent,
     PlantillaEspacioComponent,
     SidenavComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

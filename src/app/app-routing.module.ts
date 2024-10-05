@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component'; // Asegúrate de que esta importación sea correcta
-import { DashboardComponent } from './dashboard/dashboard.component'; // Importa el DashboardComponent
+import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SettingsComponent } from './settings/settings.component'; 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent }, // Ruta para el dashboard
-  { path: '', redirectTo: '/login', pathMatch: 'full' } // Redirección a login por defecto
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'settings', component: SettingsComponent }, 
+  { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

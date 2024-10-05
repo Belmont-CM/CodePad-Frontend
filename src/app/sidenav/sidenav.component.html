@@ -14,27 +14,27 @@
     </div>
     <nav>
       <ul class="space-y-2">
-        <li><a href="#" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200">
+        <li><a (click)="navigateTo('/dashboard')" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200 cursor-pointer">
           <fa-icon [icon]="faFileAlt" [fixedWidth]="true" class="mr-3"></fa-icon>
           <span *ngIf="isOpen">Notas</span>
         </a></li>
-        <li><a href="#" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200">
+        <li><a (click)="navigateTo('/dashboard')" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200 cursor-pointer">
           <fa-icon [icon]="faCode" [fixedWidth]="true" class="mr-3"></fa-icon>
           <span *ngIf="isOpen">Código</span>
         </a></li>
-        <li><a href="#" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200">
+        <li><a (click)="navigateTo('/dashboard')" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200 cursor-pointer">
           <fa-icon [icon]="faBell" [fixedWidth]="true" class="mr-3"></fa-icon>
           <span *ngIf="isOpen">Notificaciones</span>
         </a></li>
-        <li><a href="#" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200">
+        <li><a (click)="navigateTo('/dashboard')" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200 cursor-pointer">
           <fa-icon [icon]="faTag" [fixedWidth]="true" class="mr-3"></fa-icon>
           <span *ngIf="isOpen">Etiquetas</span>
         </a></li>
-        <li><a href="#" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200">
+        <li><a (click)="navigateTo('/dashboard')" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200 cursor-pointer">
           <fa-icon [icon]="faTrash" [fixedWidth]="true" class="mr-3"></fa-icon>
           <span *ngIf="isOpen">Papelera</span>
         </a></li>
-        <li><a href="#" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200">
+        <li><a (click)="navigateTo('/settings')" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200 cursor-pointer">
           <fa-icon [icon]="faCog" [fixedWidth]="true" class="mr-3"></fa-icon>
           <span *ngIf="isOpen">Configuración</span>
         </a></li>
@@ -42,7 +42,7 @@
     </nav>
   </div>
   <div class="space-y-2">
-    <a href="#" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200">
+    <a (click)="navigateTo('/dashboard')" class="flex items-center text-gray-300 hover:text-blue-400 hover:bg-gray-700/40 p-2 rounded-md transition-all duration-200 cursor-pointer">
       <fa-icon [icon]="faUser" [fixedWidth]="true" class="mr-3"></fa-icon>
       <span *ngIf="isOpen">Perfil</span>
     </a>
