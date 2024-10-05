@@ -15,10 +15,12 @@ import {
   faMicrochip,
 } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { LoginService } from '../service/login.service';
+import { LoginService } from '../service/login.service'; // Asegúrate de que este es el servicio correcto
+import { AuthService } from '../service/auth.service'; // Importa el AuthService que acabas de crear
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http'; // Importa HttpErrorResponse
 
 @Component({
   selector: 'app-login',
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private library: FaIconLibrary,
     private loginService: LoginService,
+    private authService: AuthService, // Añadido el AuthService aquí
     private router: Router,
     private toastr: ToastrService,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -54,18 +57,14 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  // * Iniciar sesion
+  // Propiedades del componente
   username: string = '';
   password: string = '';
-
-  // * Resgistrarse
   isRegistering: boolean = false;
   email: string = '';
   showConfirmPassword: boolean = false;
   showLoader: boolean = false;
   showPassword: boolean = false;
-
-  // * Informacion del sistema
   currentInfoIndex: number = 0;
 
   InfoSistema: {
@@ -111,25 +110,27 @@ export class LoginComponent implements OnInit {
       password: this.password,
     };
 
-    this.loginService.postData('usuarios/login/', loginData).subscribe({
+    this.loginService.login(loginData.username, loginData.password).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); // Para depuración
-        if (response && response.message === 'Login correcto') {
-          localStorage.setItem('token', response.token);
+        if (response && response.access) {
+          localStorage.setItem('token', response.access);
+          localStorage.setItem('refreshToken', response.refresh); // Guarda el token de refresco
+
           this.toastr.success('Inicio de sesión exitoso', 'Éxito', {
-            positionClass: 'toast-top-right', // Cambiado a la parte superior derecha
+            positionClass: 'toast-top-right',
             timeOut: 3000,
             closeButton: true,
             progressBar: true,
           });
 
-          // Redirigir al dashboard después de 3 segundos (después de que la notificación desaparezca)
+          // Redirigir al dashboard después de 3 segundos
           setTimeout(() => {
             this.router.navigate(['/dashboard']);
-          }, 3000); // 3000ms coincide con el tiempo de la notificación
+          }, 3000);
         } else {
           this.toastr.error('Credenciales incorrectas', 'Error', {
-            positionClass: 'toast-top-right', // Ajustado para mantener consistencia
+            positionClass: 'toast-top-right',
             timeOut: 3000,
             closeButton: true,
             progressBar: true,
@@ -139,7 +140,7 @@ export class LoginComponent implements OnInit {
       error: (err) => {
         console.error('Error de login:', err); // Para depuración
         this.toastr.error('Error al realizar el login', 'Error', {
-          positionClass: 'toast-top-right', // Ajustado para mantener consistencia
+          positionClass: 'toast-top-right',
           timeOut: 3000,
           closeButton: true,
           progressBar: true,
@@ -147,6 +148,7 @@ export class LoginComponent implements OnInit {
       },
     });
   }
+
 
   crearUsuario() {
     // Aquí va la lógica para crear usuario
