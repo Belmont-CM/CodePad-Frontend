@@ -13,14 +13,17 @@ import {
   faCheckDouble,
   faBolt,
   faMicrochip,
+  faPlus,
+  faTimes,
+  faEnvelope,
 } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { LoginService } from '../service/login.service'; // Asegúrate de que este es el servicio correcto
-import { AuthService } from '../service/auth.service'; // Importa el AuthService que acabas de crear
+import { LoginService } from '../service/login.service';
+import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http'; // Importa HttpErrorResponse
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -31,32 +34,6 @@ export class LoginComponent implements OnInit {
   @ViewChild('canvasElement', { static: true })
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.RotacionInformacion();
-    }
-  }
-
-  constructor(
-    private library: FaIconLibrary,
-    private loginService: LoginService,
-    private authService: AuthService, // Añadido el AuthService aquí
-    private router: Router,
-    private toastr: ToastrService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    library.addIcons(
-      faBug,
-      faUser,
-      faLock,
-      faEye,
-      faEyeSlash,
-      faChevronRight,
-      faBell,
-      faKeyboard
-    );
-  }
-
   // Propiedades del componente
   username: string = '';
   password: string = '';
@@ -66,6 +43,14 @@ export class LoginComponent implements OnInit {
   showLoader: boolean = false;
   showPassword: boolean = false;
   currentInfoIndex: number = 0;
+
+  // Nuevas propiedades para el formulario de registro
+  activeForm: 'main' | 'additional' = 'main';
+  showConfirmPasswordReg: boolean = false;
+  nombres: string = '';
+  apellidoPaterno: string = '';
+  apellidoMaterno: string = '';
+  pistaContrasena: string = '';
 
   InfoSistema: {
     title: string;
@@ -104,27 +89,52 @@ export class LoginComponent implements OnInit {
     },
   ];
 
+  constructor(
+    private library: FaIconLibrary,
+    private loginService: LoginService,
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    library.addIcons(
+      faBug,
+      faUser,
+      faLock,
+      faEye,
+      faEyeSlash,
+      faChevronRight,
+      faBell,
+      faKeyboard,
+      faPlus,
+      faTimes,
+      faEnvelope
+    );
+  }
+
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.RotacionInformacion();
+    }
+  }
+
   onSubmit() {
-    const loginData = {
-      username: this.username,
-      password: this.password,
-    };
-
-    this.loginService.login(loginData.username, loginData.password).subscribe({
+    this.loginService.login(this.username, this.password).subscribe({
       next: (response) => {
-        console.log('Respuesta del servidor:', response); // Para depuración
+        console.log('Respuesta del servidor:', response);
         if (response && response.access) {
-          localStorage.setItem('token', response.access);
-          localStorage.setItem('refreshToken', response.refresh); // Guarda el token de refresco
-
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('token', response.access);
+            localStorage.setItem('refreshToken', response.refresh);
+          }
+  
           this.toastr.success('Inicio de sesión exitoso', 'Éxito', {
             positionClass: 'toast-top-right',
             timeOut: 3000,
             closeButton: true,
             progressBar: true,
           });
-
-          // Redirigir al dashboard después de 3 segundos
+  
           setTimeout(() => {
             this.router.navigate(['/dashboard']);
           }, 3000);
@@ -138,7 +148,7 @@ export class LoginComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error de login:', err); // Para depuración
+        console.error('Error de login:', err);
         this.toastr.error('Error al realizar el login', 'Error', {
           positionClass: 'toast-top-right',
           timeOut: 3000,
@@ -149,9 +159,31 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
   crearUsuario() {
-    // Aquí va la lógica para crear usuario
+    // Aquí implementaremos la lógica para crear un nuevo usuario
+    console.log('Creando nuevo usuario...');
+    const nuevoUsuario = {
+      username: this.username,
+      email: this.email,
+      password: this.password,
+      nombres: this.nombres,
+      apellidoPaterno: this.apellidoPaterno,
+      apellidoMaterno: this.apellidoMaterno,
+      pistaContrasena: this.pistaContrasena
+    };
+
+    // Aquí deberías llamar a tu servicio para crear el usuario
+    // Por ejemplo:
+    // this.authService.registrarUsuario(nuevoUsuario).subscribe({
+    //   next: (response) => {
+    //     this.toastr.success('Usuario creado exitosamente', 'Éxito');
+    //     this.isRegistering = false;
+    //   },
+    //   error: (error) => {
+    //     this.toastr.error('Error al crear el usuario', 'Error');
+    //     console.error('Error:', error);
+    //   }
+    // });
   }
 
   AlternarVisibilidadPassword() {
@@ -159,7 +191,7 @@ export class LoginComponent implements OnInit {
   }
 
   AlternarVisibilidadCreacionPassword() {
-    this.showConfirmPassword = !this.showConfirmPassword;
+    this.showConfirmPasswordReg = !this.showConfirmPasswordReg;
   }
 
   RotacionInformacion() {
@@ -175,8 +207,10 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.showLoader = false;
       this.isRegistering = true;
-    }, 2000);
+    }, 3500);
   }
 
-  
+  cambiarFormulario(formulario: 'main' | 'additional') {
+    this.activeForm = formulario;
+  }
 }
