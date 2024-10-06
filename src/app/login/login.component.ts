@@ -25,6 +25,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginConfirmationDialogComponent } from '../login/login-confirmation/login-confirmation.component'; 
 
 @Component({
   selector: 'app-login',
@@ -32,8 +34,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('canvasElement', { static: true })
-  canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('canvasElement', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('loginForm', { static: true }) loginForm!: ElementRef<HTMLFormElement>;
 
   registroForm!: FormGroup;
 
@@ -99,7 +101,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog
   ) {
     library.addIcons(
       faBug,
@@ -180,6 +183,7 @@ export class LoginComponent implements OnInit {
   }
 
   crearUsuario() {
+    debugger
     if (this.registroForm.invalid) {
       if (this.registroForm.hasError('passwordMismatch')) {
         this.toastr.error('Las contraseñas no coinciden', 'Error');
@@ -200,11 +204,11 @@ export class LoginComponent implements OnInit {
       pista_password: formValues.pistaPassword
     };
   
-  
     this.loginService.postData('usuarios/', nuevoUsuario).subscribe({
       next: (response) => {
         this.toastr.success('Usuario creado con éxito', 'Éxito');
         console.log('Respuesta del servidor:', response);
+        this.openLoginConfirmationDialog(nuevoUsuario.username, nuevoUsuario.password);
       },
       error: (error) => {
         console.error('Error:', error);
@@ -226,6 +230,45 @@ export class LoginComponent implements OnInit {
     } else {
       formGroup.get('confirmPassword')?.setErrors(null);
     }
+  }
+
+  openLoginConfirmationDialog(username: string, password: string) {
+    const dialogRef = this.dialog.open(LoginConfirmationDialogComponent, {
+      width: '300px',
+      position: { top: '50%', left: '50%' },
+      panelClass: ['custom-dialog-container', 'center-dialog'],
+      backdropClass: 'custom-dialog-backdrop'
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'login') {
+        this.loginWithNewCredentials(username, password);
+      } else {
+        // Manejar el caso de cierre o cancelación
+      }
+    });
+  }
+  
+
+  loginWithNewCredentials(username: string, password: string) {
+    this.loginService.login(username, password).subscribe({
+      next: (response) => {
+        if (response && response.access) {
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('token', response.access);
+            localStorage.setItem('refreshToken', response.refresh);
+          }
+          this.toastr.success('Inicio de sesión exitoso', 'Éxito');
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.toastr.error('Error al iniciar sesión', 'Error');
+        }
+      },
+      error: (err) => {
+        console.error('Error de login:', err);
+        this.toastr.error('Error al realizar el login', 'Error');
+      },
+    });
   }
 
   AlternarVisibilidadPassword() {

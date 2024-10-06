@@ -73,7 +73,7 @@
               'opacity-50 blur-sm': activeForm !== 'main'
             }"
           >
-            <form [formGroup]="registroForm" class="space-y-4">
+          <form #loginForm [formGroup]="registroForm" class="space-y-4">
               <div>
                 <label for="username" class="block mb-1 text-gray-300"
                   >Nombre de usuario</label

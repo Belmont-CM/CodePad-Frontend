@@ -4,8 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faUser, faLock, faEye, faEyeSlash, faCheckCircle, faPlus, faTimes, faEnvelope, faCheckDouble, faBolt, faMicrochip, faFileAlt, faCode, faBell, faTag, faTrash, faCog, faSignOutAlt, faSearch, faClock } from '@fortawesome/free-solid-svg-icons';
-import { provideHttpClient, withFetch, HTTP_INTERCEPTORS } from '@angular/common/http'; 
+import { provideHttpClient, withFetch, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,8 +18,8 @@ import { PlantillaNovaComponent } from './plantillas/plantilla-nova/plantilla-no
 import { PlantillaEspacioComponent } from './plantillas/plantilla-espacio/plantilla-espacio.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { SettingsComponent } from './settings/settings.component';
-
 import { AuthInterceptor } from './service/auth.interceptor';
+import { LoginConfirmationDialogComponent } from './login/login-confirmation/login-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { AuthInterceptor } from './service/auth.interceptor';
     PlantillaEspacioComponent,
     SidenavComponent,
     SettingsComponent,
+    LoginConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,11 +50,13 @@ import { AuthInterceptor } from './service/auth.interceptor';
     }),
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [
     provideClientHydration(),
     provideHttpClient(withFetch()),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } 
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
