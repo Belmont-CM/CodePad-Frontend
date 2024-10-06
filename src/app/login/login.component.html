@@ -69,157 +69,159 @@
           </button>
         </div>
         <div class="flex bg-gray-800/50 rounded-b-lg">
-          <div
-            class="w-1/2 p-6 transition-all duration-300"
-            [ngClass]="{
-              'opacity-100 blur-none': activeForm === 'main',
-              'opacity-50 blur-sm': activeForm !== 'main'
-            }"
-          >
-            <form class="space-y-4">
-              <div>
-                <label for="username" class="block mb-1 text-gray-300"
-                  >Nombre de usuario</label
-                >
-                <input
-                  id="username"
-                  type="text"
-                  [(ngModel)]="username"
-                  name="username"
-                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  placeholder="Ingrese su nombre de usuario"
-                />
-              </div>
-              <div>
-                <label for="email" class="block mb-1 text-gray-300"
-                  >Correo electrónico</label
-                >
-                <input
-                  id="email"
-                  type="email"
-                  [(ngModel)]="email"
-                  name="email"
-                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  placeholder="Ingrese su correo electrónico"
-                />
-              </div>
-              <div>
-                <label for="password" class="block mb-1 text-gray-300"
-                  >Contraseña</label
-                >
-                <div class="relative">
-                  <input
-                    id="password"
-                    [type]="showPassword ? 'text' : 'password'"
-                    [(ngModel)]="password"
-                    name="password"
-                    class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md pr-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="Ingrese su contraseña"
-                  />
-                  <button
-                    type="button"
-                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
-                    (click)="AlternarVisibilidadPassword()"
-                  >
-                    <fa-icon
-                      [icon]="
-                        showPassword ? ['fas', 'eye-slash'] : ['fas', 'eye']
-                      "
-                    ></fa-icon>
-                  </button>
-                </div>
-              </div>
-              <div>
-                <label for="confirm-password" class="block mb-1 text-gray-300"
-                  >Confirmar contraseña</label
-                >
-                <div class="relative">
-                  <input
-                    id="confirm-password"
-                    [type]="showConfirmPasswordReg ? 'text' : 'password'"
-                    class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md pr-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="Confirme su contraseña"
-                  />
-                  <button
-                    type="button"
-                    (click)="AlternarVisibilidadCreacionPassword()"
-                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
-                  >
-                    <fa-icon
-                      [icon]="
-                        showConfirmPasswordReg
-                          ? ['fas', 'eye-slash']
-                          : ['fas', 'eye']
-                      "
-                    ></fa-icon>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+  <div
+    class="w-1/2 p-6 transition-all duration-300"
+    [ngClass]="{
+      'opacity-100 blur-none': activeForm === 'main',
+      'opacity-50 blur-sm': activeForm !== 'main'
+    }"
+  >
+    <form [formGroup]="registroForm" class="space-y-4">
+      <div>
+        <label for="username" class="block mb-1 text-gray-300">Nombre de usuario</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          placeholder="Ingrese su nombre de usuario"
+        />
+        <div *ngIf="registroForm.get('username')?.invalid && (registroForm.get('username')?.dirty || registroForm.get('username')?.touched)" class="text-red-500 text-sm mt-1">
+          Nombre de usuario es requerido
+        </div>
+      </div>
 
-          <div
-            class="w-1/2 p-6 transition-all duration-300"
-            [ngClass]="{
-              'opacity-100 blur-none': activeForm === 'additional',
-              'opacity-50 blur-sm': activeForm !== 'additional'
-            }"
+      <div>
+        <label for="correo" class="block mb-1 text-gray-300">Correo electrónico</label>
+        <input
+          id="correo"
+          type="email"
+          formControlName="correo"
+          class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          placeholder="Ingrese su correo electrónico"
+        />
+        <div *ngIf="registroForm.get('correo')?.invalid && (registroForm.get('correo')?.dirty || registroForm.get('correo')?.touched)" class="text-red-500 text-sm mt-1">
+          Correo es requerido
+        </div>
+      </div>
+
+      <div>
+        <label for="password" class="block mb-1 text-gray-300">Contraseña</label>
+        <div class="relative">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md pr-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            placeholder="Ingrese su contraseña"
+          />
+          <button
+            type="button"
+            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
+            (click)="AlternarVisibilidadPassword()"
           >
-            <form class="space-y-4">
-              <div>
-                <label for="nombres" class="block mb-1 text-gray-300"
-                  >Nombres</label
-                >
-                <input
-                  id="nombres"
-                  type="text"
-                  [(ngModel)]="nombres"
-                  name="nombres"
-                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  placeholder="Ingrese sus nombres"
-                />
-              </div>
-              <div>
-                <label for="apellido-paterno" class="block mb-1 text-gray-300"
-                  >Apellido paterno</label
-                >
-                <input
-                  id="apellido-paterno"
-                  type="text"
-                  [(ngModel)]="apellidoPaterno"
-                  name="apellidoPaterno"
-                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  placeholder="Ingrese su apellido paterno"
-                />
-              </div>
-              <div>
-                <label for="apellido-materno" class="block mb-1 text-gray-300"
-                  >Apellido materno</label
-                >
-                <input
-                  id="apellido-materno"
-                  type="text"
-                  [(ngModel)]="apellidoMaterno"
-                  name="apellidoMaterno"
-                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  placeholder="Ingrese su apellido materno"
-                />
-              </div>
-              <div>
-                <label for="pista-contrasena" class="block mb-1 text-gray-300"
-                  >Pista de la contraseña</label
-                >
-                <input
-                  id="pista-contrasena"
-                  type="text"
-                  [(ngModel)]="pistaContrasena"
-                  name="pistaContrasena"
-                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  placeholder="Ingrese una pista para su contraseña"
-                />
-              </div>
-            </form>
-          </div>
+            <fa-icon [icon]="showPassword ? ['fas', 'eye-slash'] : ['fas', 'eye']"></fa-icon>
+          </button>
+        </div>
+        <div *ngIf="registroForm.get('password')?.invalid && (registroForm.get('password')?.dirty || registroForm.get('password')?.touched)" class="text-red-500 text-sm mt-1">
+          Contraseña es requerida
+        </div>
+      </div>
+
+      <div>
+        <label for="confirm-password" class="block mb-1 text-gray-300">Confirmar contraseña</label>
+        <div class="relative">
+          <input
+            id="confirm-password"
+            [type]="showConfirmPasswordReg ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md pr-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            placeholder="Confirme su contraseña"
+          />
+          <button
+            type="button"
+            (click)="AlternarVisibilidadCreacionPassword()"
+            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
+          >
+            <fa-icon
+              [icon]="showConfirmPasswordReg ? ['fas', 'eye-slash'] : ['fas', 'eye']"
+            ></fa-icon>
+          </button>
+        </div>
+        <div *ngIf="registroForm.get('confirmPassword')?.invalid && (registroForm.get('confirmPassword')?.dirty || registroForm.get('confirmPassword')?.touched)" class="text-red-500 text-sm mt-1">
+          Confirme su contraseña
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div
+    class="w-1/2 p-6 transition-all duration-300"
+    [ngClass]="{
+      'opacity-100 blur-none': activeForm === 'additional',
+      'opacity-50 blur-sm': activeForm !== 'additional'
+    }"
+  >
+    <form [formGroup]="registroForm" class="space-y-4">
+      <div>
+        <label for="nombres" class="block mb-1 text-gray-300">Nombres</label>
+        <input
+          id="nombres"
+          type="text"
+          formControlName="nombres"
+          class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          placeholder="Ingrese sus nombres"
+        />
+        <div *ngIf="registroForm.get('nombres')?.invalid && (registroForm.get('nombres')?.dirty || registroForm.get('nombres')?.touched)" class="text-red-500 text-sm mt-1">
+          Nombres es requerido
+        </div>
+      </div>
+
+      <div>
+        <label for="apellido-paterno" class="block mb-1 text-gray-300">Apellido paterno</label>
+        <input
+          id="apellido-paterno"
+          type="text"
+          formControlName="apellidoPaterno"
+          class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          placeholder="Ingrese su apellido paterno"
+        />
+        <div *ngIf="registroForm.get('apellidoPaterno')?.invalid && (registroForm.get('apellidoPaterno')?.dirty || registroForm.get('apellidoPaterno')?.touched)" class="text-red-500 text-sm mt-1">
+          Apellido paterno es requerido
+        </div>
+      </div>
+
+      <div>
+        <label for="apellido-materno" class="block mb-1 text-gray-300">Apellido materno</label>
+        <input
+          id="apellido-materno"
+          type="text"
+          formControlName="apellidoMaterno"
+          class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          placeholder="Ingrese su apellido materno"
+        />
+        <div *ngIf="registroForm.get('apellidoMaterno')?.invalid && (registroForm.get('apellidoMaterno')?.dirty || registroForm.get('apellidoMaterno')?.touched)" class="text-red-500 text-sm mt-1">
+          Apellido materno es requerido
+        </div>
+      </div>
+
+      <div>
+        <label for="pista-password" class="block mb-1 text-gray-300">Pista de la contraseña</label>
+        <input
+          id="pista-password"
+          type="text"
+          formControlName="pistaPassword"
+          class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          placeholder="Ingrese una pista para su contraseña"
+        />
+        <div *ngIf="registroForm.get('pistaPassword')?.invalid && (registroForm.get('pistaPassword')?.dirty || registroForm.get('pistaPassword')?.touched)" class="text-red-500 text-sm mt-1">
+          Pista de la contraseña es requerida
+        </div>
+      </div>
+    </form>
+  </div>
+
+
         </div>
         <div class="mt-6 text-center">
           <button

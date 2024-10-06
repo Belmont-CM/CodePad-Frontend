@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -34,11 +35,13 @@ export class LoginComponent implements OnInit {
   @ViewChild('canvasElement', { static: true })
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
+  registroForm!: FormGroup;
+
   // Propiedades del componente
   username: string = '';
   password: string = '';
   isRegistering: boolean = false;
-  email: string = '';
+  correo: string = '';
   showConfirmPassword: boolean = false;
   showLoader: boolean = false;
   showPassword: boolean = false;
@@ -95,7 +98,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private toastr: ToastrService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private fb: FormBuilder
   ) {
     library.addIcons(
       faBug,
@@ -110,7 +114,21 @@ export class LoginComponent implements OnInit {
       faTimes,
       faEnvelope
     );
+    this.createForm();
   }
+
+  createForm() {
+    this.registroForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(4)]],
+      correo: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      nombres: ['', Validators.required],
+      apellidoPaterno: ['', Validators.required],
+      apellidoMaterno: ['', Validators.required],
+      pistaPassword: ['', Validators.required]
+    });
+  }
+  
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -160,30 +178,36 @@ export class LoginComponent implements OnInit {
   }
 
   crearUsuario() {
-    // Aquí implementaremos la lógica para crear un nuevo usuario
-    console.log('Creando nuevo usuario...');
+    if (this.registroForm.invalid) {
+      this.toastr.error('Por favor, complete todos los campos requeridos', 'Error');
+      return;
+    }
+  
+    const formValues = this.registroForm.value;
     const nuevoUsuario = {
-      username: this.username,
-      email: this.email,
-      password: this.password,
-      nombres: this.nombres,
-      apellidoPaterno: this.apellidoPaterno,
-      apellidoMaterno: this.apellidoMaterno,
-      pistaContrasena: this.pistaContrasena
+      username: formValues.username,
+      nombres: formValues.nombres,
+      apellido_paterno: formValues.apellidoPaterno,
+      apellido_materno: formValues.apellidoMaterno,
+      correo: formValues.correo,
+      password: formValues.password,
+      pista_password: formValues.pistaPassword
     };
-
-    // Aquí deberías llamar a tu servicio para crear el usuario
-    // Por ejemplo:
-    // this.authService.registrarUsuario(nuevoUsuario).subscribe({
-    //   next: (response) => {
-    //     this.toastr.success('Usuario creado exitosamente', 'Éxito');
-    //     this.isRegistering = false;
-    //   },
-    //   error: (error) => {
-    //     this.toastr.error('Error al crear el usuario', 'Error');
-    //     console.error('Error:', error);
-    //   }
-    // });
+  
+    this.loginService.postData('usuarios/', nuevoUsuario).subscribe({
+      next: (response) => {
+        this.toastr.success('Usuario creado con éxito', 'Éxito');
+        console.log('Respuesta del servidor:', response);
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        if (error.status === 400) {
+          this.toastr.error('Error al crear el usuario. Verifique los datos ingresados.', 'Error');
+        } else {
+          this.toastr.error('Ocurrió un error en el servidor', 'Error');
+        }
+      }
+    });
   }
 
   AlternarVisibilidadPassword() {
