@@ -1,208 +1,296 @@
-<!-- codepad-login.component.html -->
-<div
-  class="min-h-screen flex flex-row justify-center items-center bg-transparent p-4 relative"
->
-  <app-templates-canvas></app-templates-canvas>
+<div class="flex h-screen bg-gray-900 text-white overflow-hidden">
+  <!-- Canvas de plantillas (efecto de fondo) -->
+  <app-templates-canvas class="absolute inset-0"></app-templates-canvas>
 
-  <!-- Contenedor izquierdo -->
-  <div
-    class="w-[950px] h-[700px] p-8 flex flex-col justify-center items-center text-white bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-md rounded-lg shadow-lg shadow-black/50"
-  >
-    <!-- Mensaje de bienvenida -->
-    <div
-      class="mb-8 text-center"
-      style="margin-top: 110px"
-      *ngIf="!isRegistering"
-    >
-      <h1 class="text-4xl font-bold mb-4 animate-rgb-smooth">
-        Bienvenido a CodePad
-      </h1>
-      <p class="text-lg text-gray-400 opacity-80">
-        Inicia sesión para acceder a todas las funciones
-      </p>
-    </div>
-
-    <div
-      *ngIf="showLoader"
-      class="absolute inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50 z-10"
-    >
-    <div id="loader">
-      <div class="ls-particles ls-part-1"></div>
-      <div class="ls-particles ls-part-2"></div>
-      <div class="ls-particles ls-part-3"></div>
-      <div class="ls-particles ls-part-4"></div>
-      <div class="ls-particles ls-part-5"></div>
-      <div class="lightsaber ls-left ls-green"></div>
-      <div class="lightsaber ls-right ls-red"></div>
-    </div>  
-    </div>
-
-    <div
-      *ngIf="isRegistering"
-      class="transition-opacity duration-500 ease-in-out w-full max-w-4xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-md rounded-lg shadow-lg shadow-black/50 p-6"
-    >
-      <button
-        (click)="isRegistering = false"
-        class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+  <!-- Contenedor principal de contenido -->
+  <div class="flex flex-row justify-center items-center w-full p-4 relative">
+    <!-- Contenedor izquierdo -->
+    <div class="w-[950px] h-[700px] p-8 flex flex-col justify-center items-center bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30 mr-4">
+      <!-- Mensaje de bienvenida -->
+      <div
+        class="mb-8 text-center"
+        style="margin-top: 110px"
+        *ngIf="!isRegistering"
       >
-        <fa-icon [icon]="['fas', 'times']" size="lg"></fa-icon>
-      </button>
-      <h1 class="text-3xl font-bold text-center mb-6">Crear cuenta nueva</h1>
-      <div class="flex mb-6">
-        <button
-          class="w-1/2 py-2 text-xl font-bold rounded-tl-lg transition-colors duration-300"
-          [ngClass]="{'bg-blue-600': activeForm === 'main', 'bg-gray-700': activeForm !== 'main'}"
-          (click)="cambiarFormulario('main')"
+        <h1
+          class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400"
         >
-          Datos principales
-        </button>
-        <button
-          class="w-1/2 py-2 text-xl font-bold rounded-tr-lg transition-colors duration-300"
-          [ngClass]="{'bg-blue-600': activeForm === 'additional', 'bg-gray-700': activeForm !== 'additional'}"
-          (click)="cambiarFormulario('additional')"
-        >
-          Información Adicional
-        </button>
+          Bienvenido a CodePad
+        </h1>
+        <p class="text-lg text-gray-400 opacity-80">
+          Inicia sesión para acceder a todas las funciones
+        </p>
       </div>
-      <div class="flex bg-gray-800/50 rounded-b-lg">
-        <div 
-          class="w-1/2 p-6 transition-all duration-300"
-          [ngClass]="{'opacity-100 blur-none': activeForm === 'main', 'opacity-50 blur-sm': activeForm !== 'main'}"
-        >
-          <form class="space-y-4">
-            <div>
-              <label for="username" class="block mb-1 text-gray-300">Nombre de usuario</label>
-              <input id="username" type="text" [(ngModel)]="username" name="username" class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingrese su nombre de usuario" />
-            </div>
-            <div>
-              <label for="email" class="block mb-1 text-gray-300">Correo electrónico</label>
-              <input id="email" type="email" [(ngModel)]="email" name="email" class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingrese su correo electrónico" />
-            </div>
-            <div>
-              <label for="password" class="block mb-1 text-gray-300">Contraseña</label>
-              <div class="relative">
-                <input 
-                  id="password" 
-                  [type]="showPassword ? 'text' : 'password'"
-                  [(ngModel)]="password"
-                  name="password"
-                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md pr-10 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                  placeholder="Ingrese su contraseña" 
-                />
-                <button
-                  type="button"
-                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
-                  (click)="AlternarVisibilidadPassword()"
-                >
-                  <fa-icon [icon]="showPassword ? ['fas', 'eye-slash'] : ['fas', 'eye']"></fa-icon>
-                </button>
-              </div>
-            </div>
-            <div>
-              <label for="confirm-password" class="block mb-1 text-gray-300">Confirmar contraseña</label>
-              <div class="relative">
-                <input 
-                  id="confirm-password" 
-                  [type]="showConfirmPasswordReg ? 'text' : 'password'"
-                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md pr-10 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                  placeholder="Confirme su contraseña" 
-                />
-                <button
-                  type="button"
-                  (click)="AlternarVisibilidadCreacionPassword()"
-                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
-                >
-                  <fa-icon
-                    [icon]="showConfirmPasswordReg ? ['fas', 'eye-slash'] : ['fas', 'eye']"
-                  ></fa-icon>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-        
-        <div 
-          class="w-1/2 p-6 transition-all duration-300"
-          [ngClass]="{'opacity-100 blur-none': activeForm === 'additional', 'opacity-50 blur-sm': activeForm !== 'additional'}"
-        >
-          <form class="space-y-4">
-            <div>
-              <label for="nombres" class="block mb-1 text-gray-300">Nombres</label>
-              <input id="nombres" type="text" [(ngModel)]="nombres" name="nombres" class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingrese sus nombres" />
-            </div>
-            <div>
-              <label for="apellido-paterno" class="block mb-1 text-gray-300">Apellido paterno</label>
-              <input id="apellido-paterno" type="text" [(ngModel)]="apellidoPaterno" name="apellidoPaterno" class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingrese su apellido paterno" />
-            </div>
-            <div>
-              <label for="apellido-materno" class="block mb-1 text-gray-300">Apellido materno</label>
-              <input id="apellido-materno" type="text" [(ngModel)]="apellidoMaterno" name="apellidoMaterno" class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingrese su apellido materno" />
-            </div>
-            <div>
-              <label for="pista-contrasena" class="block mb-1 text-gray-300">Pista de la contraseña</label>
-              <input id="pista-contrasena" type="text" [(ngModel)]="pistaContrasena" name="pistaContrasena" class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ingrese una pista para su contraseña" />
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="mt-6 text-center">
-        <button (click)="crearUsuario()" class="w-full max-w-md bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-          Registrarse
-        </button>
-      </div>
-    </div>
 
-    <div class="contenedor-informacion">
-      <ng-container *ngIf="InfoSistema && InfoSistema.length > 0">
-        <ng-container *ngTemplateOutlet="infoTemplate"></ng-container>
-      </ng-container>
-    </div>
-    
-    <ng-template #infoTemplate>
-      <div *ngIf="!isRegistering" class="flex-grow w-full max-w-md mt-[60px]">
-        <div class="flex items-center justify-start mb-4">
-          <fa-icon
-            [icon]="InfoSistema[currentInfoIndex].icon"
-            class="text-green-400 text-2xl mr-3"
-          ></fa-icon>
-          <h2 class="text-2xl font-bold">
-            {{ InfoSistema[currentInfoIndex].title }}
-          </h2>
+      <div
+        *ngIf="showLoader"
+        class="absolute inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50 z-10"
+      >
+        <div id="loader">
+          <div class="ls-particles ls-part-1"></div>
+          <div class="ls-particles ls-part-2"></div>
+          <div class="ls-particles ls-part-3"></div>
+          <div class="ls-particles ls-part-4"></div>
+          <div class="ls-particles ls-part-5"></div>
+          <div class="lightsaber ls-left ls-green"></div>
+          <div class="lightsaber ls-right ls-red"></div>
         </div>
-        <ul
-          class="space-y-2 bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-md p-6 rounded-lg shadow-lg shadow-black/50"
-        >
-          <li
-            *ngFor="let item of InfoSistema[currentInfoIndex].items"
-            class="flex items-start"
-          >
-            <fa-icon
-              [icon]="item.icon"
-              class="text-green-400 text-2xl mr-3"
-            ></fa-icon>
-            <span>{{ item.text }}</span>
-          </li>
-        </ul>
       </div>
-    </ng-template>
+
+      <div
+        *ngIf="isRegistering"
+        class="transition-opacity duration-500 ease-in-out w-full max-w-4xl bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30 p-6"
+      >
+        <button
+          (click)="isRegistering = false"
+          class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+        >
+          <fa-icon [icon]="['fas', 'times']" size="lg"></fa-icon>
+        </button>
+        <h1 class="text-3xl font-bold text-center mb-6">Crear cuenta nueva</h1>
+        <div class="flex mb-6">
+          <button
+            class="w-1/2 py-2 text-xl font-bold rounded-tl-lg transition-colors duration-300"
+            [ngClass]="{
+              'bg-blue-600': activeForm === 'main',
+              'bg-gray-700': activeForm !== 'main'
+            }"
+            (click)="cambiarFormulario('main')"
+          >
+            Datos principales
+          </button>
+          <button
+            class="w-1/2 py-2 text-xl font-bold rounded-tr-lg transition-colors duration-300"
+            [ngClass]="{
+              'bg-blue-600': activeForm === 'additional',
+              'bg-gray-700': activeForm !== 'additional'
+            }"
+            (click)="cambiarFormulario('additional')"
+          >
+            Información Adicional
+          </button>
+        </div>
+        <div class="flex bg-gray-800/50 rounded-b-lg">
+          <div
+            class="w-1/2 p-6 transition-all duration-300"
+            [ngClass]="{
+              'opacity-100 blur-none': activeForm === 'main',
+              'opacity-50 blur-sm': activeForm !== 'main'
+            }"
+          >
+            <form class="space-y-4">
+              <div>
+                <label for="username" class="block mb-1 text-gray-300"
+                  >Nombre de usuario</label
+                >
+                <input
+                  id="username"
+                  type="text"
+                  [(ngModel)]="username"
+                  name="username"
+                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  placeholder="Ingrese su nombre de usuario"
+                />
+              </div>
+              <div>
+                <label for="email" class="block mb-1 text-gray-300"
+                  >Correo electrónico</label
+                >
+                <input
+                  id="email"
+                  type="email"
+                  [(ngModel)]="email"
+                  name="email"
+                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  placeholder="Ingrese su correo electrónico"
+                />
+              </div>
+              <div>
+                <label for="password" class="block mb-1 text-gray-300"
+                  >Contraseña</label
+                >
+                <div class="relative">
+                  <input
+                    id="password"
+                    [type]="showPassword ? 'text' : 'password'"
+                    [(ngModel)]="password"
+                    name="password"
+                    class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md pr-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder="Ingrese su contraseña"
+                  />
+                  <button
+                    type="button"
+                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
+                    (click)="AlternarVisibilidadPassword()"
+                  >
+                    <fa-icon
+                      [icon]="
+                        showPassword ? ['fas', 'eye-slash'] : ['fas', 'eye']
+                      "
+                    ></fa-icon>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label for="confirm-password" class="block mb-1 text-gray-300"
+                  >Confirmar contraseña</label
+                >
+                <div class="relative">
+                  <input
+                    id="confirm-password"
+                    [type]="showConfirmPasswordReg ? 'text' : 'password'"
+                    class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md pr-10 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder="Confirme su contraseña"
+                  />
+                  <button
+                    type="button"
+                    (click)="AlternarVisibilidadCreacionPassword()"
+                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
+                  >
+                    <fa-icon
+                      [icon]="
+                        showConfirmPasswordReg
+                          ? ['fas', 'eye-slash']
+                          : ['fas', 'eye']
+                      "
+                    ></fa-icon>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div
+            class="w-1/2 p-6 transition-all duration-300"
+            [ngClass]="{
+              'opacity-100 blur-none': activeForm === 'additional',
+              'opacity-50 blur-sm': activeForm !== 'additional'
+            }"
+          >
+            <form class="space-y-4">
+              <div>
+                <label for="nombres" class="block mb-1 text-gray-300"
+                  >Nombres</label
+                >
+                <input
+                  id="nombres"
+                  type="text"
+                  [(ngModel)]="nombres"
+                  name="nombres"
+                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  placeholder="Ingrese sus nombres"
+                />
+              </div>
+              <div>
+                <label for="apellido-paterno" class="block mb-1 text-gray-300"
+                  >Apellido paterno</label
+                >
+                <input
+                  id="apellido-paterno"
+                  type="text"
+                  [(ngModel)]="apellidoPaterno"
+                  name="apellidoPaterno"
+                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  placeholder="Ingrese su apellido paterno"
+                />
+              </div>
+              <div>
+                <label for="apellido-materno" class="block mb-1 text-gray-300"
+                  >Apellido materno</label
+                >
+                <input
+                  id="apellido-materno"
+                  type="text"
+                  [(ngModel)]="apellidoMaterno"
+                  name="apellidoMaterno"
+                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  placeholder="Ingrese su apellido materno"
+                />
+              </div>
+              <div>
+                <label for="pista-contrasena" class="block mb-1 text-gray-300"
+                  >Pista de la contraseña</label
+                >
+                <input
+                  id="pista-contrasena"
+                  type="text"
+                  [(ngModel)]="pistaContrasena"
+                  name="pistaContrasena"
+                  class="w-full bg-gray-700/50 text-white px-4 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  placeholder="Ingrese una pista para su contraseña"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="mt-6 text-center">
+          <button
+            (click)="crearUsuario()"
+            class="w-full max-w-md bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
+          >
+            Registrarse
+          </button>
+        </div>
+      </div>
+
+      <div class="contenedor-informacion">
+        <ng-container *ngIf="InfoSistema && InfoSistema.length > 0">
+          <ng-container *ngTemplateOutlet="infoTemplate"></ng-container>
+        </ng-container>
+      </div>
+
+      <ng-template #infoTemplate>
+        <div *ngIf="!isRegistering" class="flex-grow w-full max-w-md mt-[60px]">
+          <div class="flex items-center justify-start mb-4">
+            <fa-icon
+              [icon]="InfoSistema[currentInfoIndex].icon"
+              class="text-blue-400 text-2xl mr-3"
+            ></fa-icon>
+            <h2
+              class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400"
+            >
+              {{ InfoSistema[currentInfoIndex].title }}
+            </h2>
+          </div>
+          <ul
+            class="space-y-2 bg-gray-800/60 backdrop-blur-sm p-6 rounded-lg shadow-lg border border-gray-700/30"
+          >
+            <li
+              *ngFor="let item of InfoSistema[currentInfoIndex].items"
+              class="flex items-start"
+            >
+              <fa-icon
+                [icon]="item.icon"
+                class="text-blue-400 text-2xl mr-3"
+              ></fa-icon>
+              <span class="text-gray-300">{{ item.text }}</span>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </div>
   </div>
 
   <!-- Contenedor derecho -->
   <div
-    class="w-[500px] h-[700px] bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-md p-8 flex flex-col justify-center items-center rounded-lg ml-20"
+    class="w-[500px] h-[700px] bg-gray-800/60 backdrop-blur-sm p-8 flex flex-col justify-center items-center rounded-lg ml-20 shadow-lg border border-gray-700/30"
   >
     <div class="mb-8">
       <!-- Imagen del logo -->
-      <img src="assets/logo-completo.png" alt="CodePad Logo" class="w-48 h-auto" />
+      <img
+        src="assets/logo-completo.png"
+        alt="CodePad Logo"
+        class="w-48 h-auto"
+      />
     </div>
     <div class="space-y-4 w-full max-w-sm">
       <div class="relative">
         <fa-icon
           [icon]="['fas', 'user']"
-          class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          class="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400"
         ></fa-icon>
         <input
-          class="w-full bg-gray-700/50 text-white pl-10 pr-4 py-3 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          class="w-full bg-gradient-to-r from-gray-800/60 to-gray-700/60 text-white pl-10 pr-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
           [(ngModel)]="username"
           name="username"
           type="text"
@@ -212,10 +300,10 @@
       <div class="relative">
         <fa-icon
           [icon]="['fas', 'lock']"
-          class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          class="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400"
         ></fa-icon>
         <input
-          class="w-full bg-gray-700/50 text-white pl-10 pr-10 py-3 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          class="w-full bg-gradient-to-r from-gray-800/60 to-gray-700/60 text-white pl-10 pr-10 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
           [(ngModel)]="password"
           name="password"
           [type]="showPassword ? 'text' : 'password'"
@@ -234,7 +322,7 @@
       <form (ngSubmit)="onSubmit()">
         <button
           type="submit"
-          class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-md flex items-center justify-center transition-colors duration-300"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md flex items-center justify-center transition-colors duration-300"
         >
           <span>Iniciar Sesión</span>
           <fa-icon [icon]="['fas', 'chevron-right']" class="ml-2"></fa-icon>
@@ -242,7 +330,7 @@
       </form>
       <button
         (click)="crearUsuarioVisibilidad()"
-        class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-md flex items-center justify-center transition-colors duration-300"
+        class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-md flex items-center justify-center transition-colors duration-300"
       >
         <span>Crear Usuario</span>
         <fa-icon [icon]="['fas', 'plus']" class="ml-2"></fa-icon>
