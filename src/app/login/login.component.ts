@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
       apellidoPaterno: ['', Validators.required],
       apellidoMaterno: ['', Validators.required],
       pistaPassword: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator });
+    }, { validator: this.confirmarContraseña });
   }
   
 
@@ -180,7 +180,6 @@ export class LoginComponent implements OnInit {
   }
 
   crearUsuario() {
-    debugger
     if (this.registroForm.invalid) {
       if (this.registroForm.hasError('passwordMismatch')) {
         this.toastr.error('Las contraseñas no coinciden', 'Error');
@@ -201,7 +200,6 @@ export class LoginComponent implements OnInit {
       pista_password: formValues.pistaPassword
     };
   
-    // Nótese que no incluimos 'confirmPassword' en nuevoUsuario
   
     this.loginService.postData('usuarios/', nuevoUsuario).subscribe({
       next: (response) => {
@@ -219,7 +217,7 @@ export class LoginComponent implements OnInit {
     });
   }
   
-  passwordMatchValidator(formGroup: FormGroup) {
+  confirmarContraseña(formGroup: FormGroup) {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmPassword')?.value;
   
