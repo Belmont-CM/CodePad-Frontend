@@ -1,27 +1,26 @@
 <div
-  class="min-h-screen flex flex-row justify-center items-center bg-transparent p-4 relative"
+  class="min-h-screen flex justify-center items-center bg-transparent p-4 relative"
 >
   <app-templates-canvas></app-templates-canvas>
 
-  <!-- Contenedor principal de contenido -->
-  <div class="flex flex-row justify-center items-center w-full p-4 relative">
+  <div class="flex flex-row justify-center items-center w-full max-w-[1500px]">
     <!-- Contenedor izquierdo -->
-    <div class="w-[950px] h-[700px] p-8 flex flex-col justify-center items-center bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30 mr-4">
-      <!-- Mensaje de bienvenida -->
     <div
-    class="mb-8 text-center"
-    style="margin-top: 110px"
-    *ngIf="!isRegistering"
-  >
-    <h1 class="text-4xl font-bold mb-4 animate-rgb-smooth">
-      Bienvenido a CodePad
-    </h1>
-    <p class="text-lg text-gray-400 opacity-80">
-      Inicia sesión para acceder a todas las funciones
-    </p>
-  </div>
-
-
+      class="w-[950px] h-[700px] p-8 flex flex-col justify-center items-center bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30 mr-4"
+    >
+      <!-- Mensaje de bienvenida -->
+      <div
+        class="mb-8 text-center"
+        style="margin-top: 110px"
+        *ngIf="!isRegistering"
+      >
+        <h1 class="text-4xl font-bold mb-4 animate-rgb-smooth">
+          Bienvenido a CodePad
+        </h1>
+        <p class="text-lg text-gray-400 opacity-80">
+          Inicia sesión para acceder a todas las funciones
+        </p>
+      </div>
       <div
         *ngIf="showLoader"
         class="absolute inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50 z-10"
@@ -273,7 +272,7 @@
 
   <!-- Contenedor derecho -->
   <div
-    class="w-[500px] h-[700px] bg-gray-800/60 backdrop-blur-sm p-8 flex flex-col justify-center items-center rounded-lg ml-20 shadow-lg border border-gray-700/30"
+    class="w-[500px] h-[700px] bg-gray-800/60 backdrop-blur-sm p-8 flex flex-col justify-center items-center rounded-lg shadow-lg border border-gray-700/30"
   >
     <div class="mb-8">
       <!-- Imagen del logo -->
