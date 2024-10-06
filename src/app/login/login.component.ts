@@ -122,15 +122,17 @@ export class LoginComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(4)]],
       correo: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
       nombres: ['', Validators.required],
       apellidoPaterno: ['', Validators.required],
       apellidoMaterno: ['', Validators.required],
       pistaPassword: ['', Validators.required]
-    });
+    }, { validator: this.passwordMatchValidator });
   }
   
 
   ngOnInit() {
+    this.createForm();
     if (isPlatformBrowser(this.platformId)) {
       this.RotacionInformacion();
     }
@@ -178,8 +180,13 @@ export class LoginComponent implements OnInit {
   }
 
   crearUsuario() {
+    debugger
     if (this.registroForm.invalid) {
-      this.toastr.error('Por favor, complete todos los campos requeridos', 'Error');
+      if (this.registroForm.hasError('passwordMismatch')) {
+        this.toastr.error('Las contraseñas no coinciden', 'Error');
+      } else {
+        this.toastr.error('Por favor, complete todos los campos requeridos', 'Error');
+      }
       return;
     }
   
@@ -193,6 +200,8 @@ export class LoginComponent implements OnInit {
       password: formValues.password,
       pista_password: formValues.pistaPassword
     };
+  
+    // Nótese que no incluimos 'confirmPassword' en nuevoUsuario
   
     this.loginService.postData('usuarios/', nuevoUsuario).subscribe({
       next: (response) => {
@@ -208,6 +217,17 @@ export class LoginComponent implements OnInit {
         }
       }
     });
+  }
+  
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+  
+    if (password !== confirmPassword) {
+      formGroup.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+    } else {
+      formGroup.get('confirmPassword')?.setErrors(null);
+    }
   }
 
   AlternarVisibilidadPassword() {
