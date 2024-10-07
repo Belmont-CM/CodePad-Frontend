@@ -792,3 +792,49 @@
 .toast-warning {
   background-color: #F89406;
 }
+
+
+/* ? MENSAJE DE BIENVENIDA */
+
+.mb-8 {
+  margin-bottom: 2rem; /* Ajusta según lo necesario */
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-4xl {
+  font-size: 2.5rem; /* Ajusta el tamaño de la fuente */
+}
+
+.text-2xl {
+  font-size: 2rem; /* Puedes ajustar este tamaño si lo deseas */
+}
+
+.text-lg {
+  font-size: 1.125rem; /* Tamaño para párrafos */
+}
+
+.text-gray-400 {
+  color: #cbd5e0; /* Color gris suave */
+}
+
+.opacity-80 {
+  opacity: 0.8; /* Opacidad */
+}
+
+.animate-rgb-smooth {
+  animation: rgb-smooth 2.5s infinite; /* Define la animación */
+}
+
+@keyframes rgb-smooth {
+  0% { color: red; }
+  33% { color: yellow; }
+  66% { color: green; }
+  100% { color: red; }
+}
+
+h2 {
+  @apply m-0 leading-none;
+}

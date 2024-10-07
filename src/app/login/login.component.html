@@ -9,14 +9,18 @@
       class="w-[950px] h-[700px] p-8 flex flex-col justify-center items-center bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30"
     >
       <!-- Mensaje de bienvenida -->
-      <div class="mb-8 text-center" *ngIf="!isRegistering">
-        <h1 class="text-4xl font-bold mb-4 animate-rgb-smooth">
-          Bienvenido a CodePad
+      <div class="mb-8 text-center p-4" *ngIf="!isRegistering">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-rgb-smooth">
+            ¡Bienvenido a CodePad!
         </h1>
-        <p class="text-lg text-gray-400 opacity-80">
-          Inicia sesión para acceder a todas las funciones
+        <p class="text-sm text-gray-400 opacity-80 mb-2">
+            CON CODEPAD, ESCRIBE, ORGANIZA Y COMPARTE CÓDIGO FACILMENTE.
         </p>
-      </div>
+        <p class="text-sm text-gray-400 opacity-80">
+            INICIA SESIÓN PARA ACCEDER A TODAS LAS FUNCIONES.
+        </p>
+    </div>
+        
       <div
         *ngIf="showLoader"
         class="absolute inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50 z-10"
@@ -73,7 +77,7 @@
               'opacity-50 blur-sm': activeForm !== 'main'
             }"
           >
-          <form #loginForm [formGroup]="registroForm" class="space-y-4">
+          <form [formGroup]="registroForm" class="space-y-4">
               <div>
                 <label for="username" class="block mb-1 text-gray-300"
                   >Nombre de usuario</label
@@ -314,37 +318,27 @@
         </div>
       </div>
 
-      <div class="contenedor-informacion">
+      <div class="contenedor-informacion bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-xl shadow-2xl">
         <ng-container *ngIf="InfoSistema && InfoSistema.length > 0">
           <ng-container *ngTemplateOutlet="infoTemplate"></ng-container>
         </ng-container>
       </div>
-
+      
       <ng-template #infoTemplate>
-        <div *ngIf="!isRegistering" class="flex-grow w-full max-w-md mt-[60px]">
-          <div class="flex items-center justify-start mb-4">
+        <div *ngIf="!isRegistering" class="flex-grow w-full max-w-md mt-0">
+          <div class="flex items-center justify-start mb-6">
             <fa-icon
               [icon]="InfoSistema[currentInfoIndex].icon"
-              class="text-blue-400 text-2xl mr-3"
+              class="text-blue-400 text-3xl mr-4"
             ></fa-icon>
-            <h2
-              class="text-2xl font-bold bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400"
-            >
+            <h2 class="text-2xl font-bold text-blue-400 m-0 leading-none">
               {{ InfoSistema[currentInfoIndex].title }}
             </h2>
           </div>
-          <ul
-            class="space-y-2 bg-gray-800/60 backdrop-blur-sm p-6 rounded-lg shadow-lg border border-gray-700/30"
-          >
-            <li
-              *ngFor="let item of InfoSistema[currentInfoIndex].items"
-              class="flex items-start"
-            >
-              <fa-icon
-                [icon]="item.icon"
-                class="text-blue-400 text-2xl mr-3"
-              ></fa-icon>
-              <span class="text-gray-300">{{ item.text }}</span>
+          <ul class="space-y-4 bg-gray-800 bg-opacity-80 backdrop-blur-md p-6 rounded-lg shadow-lg border border-blue-500 border-opacity-30">
+            <li *ngFor="let item of InfoSistema[currentInfoIndex].items" class="flex items-start transition-all duration-300 hover:translate-x-2">
+              <fa-icon [icon]="item.icon" class="text-blue-400 text-xl mr-3 mt-1"></fa-icon>
+              <span class="text-gray-200 text-lg leading-relaxed">{{ item.text }}</span>
             </li>
           </ul>
         </div>

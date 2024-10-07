@@ -13,6 +13,13 @@ html, body {
   overflow: hidden;
 }
 
+/* Estilos para modal de login*/
+.custom-dialog-backdrop {
+  backdrop-filter: blur(5px); /* Ajusta el nivel de desenfoque */
+  background-color: rgba(0, 0, 0, 0.4); /* Añadir un leve oscurecimiento */
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

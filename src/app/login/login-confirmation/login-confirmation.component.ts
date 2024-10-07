@@ -54,6 +54,7 @@ export class LoginConfirmationDialogComponent {
   constructor(public dialogRef: MatDialogRef<LoginConfirmationDialogComponent>) {}
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(); 
+    window.location.reload(); 
   }
 }

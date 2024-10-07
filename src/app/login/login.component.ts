@@ -235,19 +235,17 @@ export class LoginComponent implements OnInit {
   openLoginConfirmationDialog(username: string, password: string) {
     const dialogRef = this.dialog.open(LoginConfirmationDialogComponent, {
       width: '300px',
-      position: { top: '50%', left: '50%' },
-      panelClass: ['custom-dialog-container', 'center-dialog'],
-      backdropClass: 'custom-dialog-backdrop'
+      panelClass: ['custom-dialog-container'],
+      backdropClass: 'custom-dialog-backdrop',
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'login') {
         this.loginWithNewCredentials(username, password);
-      } else {
-        // Manejar el caso de cierre o cancelación
       }
     });
   }
+  
   
 
   loginWithNewCredentials(username: string, password: string) {
