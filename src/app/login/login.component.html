@@ -10,17 +10,19 @@
     >
       <!-- Mensaje de bienvenida -->
       <div class="mb-8 text-center p-4" *ngIf="!isRegistering">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-rgb-smooth">
-            ¡Bienvenido a CodePad!
+        <h1
+          class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-rgb-smooth"
+        >
+          ¡Bienvenido a CodePad!
         </h1>
         <p class="text-sm text-gray-400 opacity-80 mb-2">
-            CON CODEPAD, ESCRIBE, ORGANIZA Y COMPARTE CÓDIGO FACILMENTE.
+          CON CODEPAD, ESCRIBE, ORGANIZA Y COMPARTE CÓDIGO FACILMENTE.
         </p>
         <p class="text-sm text-gray-400 opacity-80">
-            INICIA SESIÓN PARA ACCEDER A TODAS LAS FUNCIONES.
+          INICIA SESIÓN PARA ACCEDER A TODAS LAS FUNCIONES.
         </p>
-    </div>
-        
+      </div>
+
       <div
         *ngIf="showLoader"
         class="absolute inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50 z-10"
@@ -46,29 +48,33 @@
         >
           <fa-icon [icon]="['fas', 'times']" size="lg"></fa-icon>
         </button>
-        <h1 class="text-2xl font-bold text-white text-center mb-6">Crear cuenta nueva</h1>
-<div class="flex mb-6 rounded-lg overflow-hidden">
-  <button
-    class="w-1/2 py-2.5 text-sm font-medium transition-all duration-300 focus:outline-none"
-    [ngClass]="{
-      'bg-blue-600 text-white': activeForm === 'main',
-      'bg-gray-700 text-gray-300 hover:bg-gray-600': activeForm !== 'main'
-    }"
-    (click)="cambiarFormulario('main')"
-  >
-    Datos principales
-  </button>
-  <button
-    class="w-1/2 py-2.5 text-sm font-medium transition-all duration-300 focus:outline-none"
-    [ngClass]="{
-      'bg-gray-700 text-gray-300': activeForm === 'additional',
-      'bg-gray-700 text-gray-300 hover:bg-gray-600': activeForm !== 'additional'
-    }"
-    (click)="cambiarFormulario('additional')"
-  >
-    Información Adicional
-  </button>
-</div>
+        <h1 class="text-2xl font-bold text-white text-center mb-6">
+          Crear cuenta nueva
+        </h1>
+        <div class="flex mb-6 rounded-lg overflow-hidden">
+          <button
+            class="w-1/2 py-2.5 text-sm font-medium transition-all duration-300 focus:outline-none"
+            [ngClass]="{
+              'bg-blue-600 text-white': activeForm === 'main',
+              'bg-gray-700 text-gray-300 hover:bg-gray-600':
+                activeForm !== 'main'
+            }"
+            (click)="cambiarFormulario('main')"
+          >
+            Datos principales
+          </button>
+          <button
+            class="w-1/2 py-2.5 text-sm font-medium transition-all duration-300 focus:outline-none"
+            [ngClass]="{
+              'bg-gray-700 text-gray-300': activeForm === 'additional',
+              'bg-gray-700 text-gray-300 hover:bg-gray-600':
+                activeForm !== 'additional'
+            }"
+            (click)="cambiarFormulario('additional')"
+          >
+            Información Adicional
+          </button>
+        </div>
         <div class="flex bg-gray-800/50 rounded-b-lg">
           <div
             class="w-1/2 p-6 transition-all duration-300"
@@ -77,7 +83,7 @@
               'opacity-50 blur-sm': activeForm !== 'main'
             }"
           >
-          <form [formGroup]="registroForm" class="space-y-4">
+            <form [formGroup]="registroForm" class="space-y-4">
               <div>
                 <label for="username" class="block mb-1 text-gray-300"
                   >Nombre de usuario</label
@@ -162,7 +168,9 @@
               </div>
 
               <div>
-                <label for="confirm-password" class="block mb-1 text-gray-300">Confirmar contraseña</label>
+                <label for="confirm-password" class="block mb-1 text-gray-300"
+                  >Confirmar contraseña</label
+                >
                 <div class="relative">
                   <input
                     id="confirm-password"
@@ -177,7 +185,11 @@
                     class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
                   >
                     <fa-icon
-                      [icon]="showConfirmPasswordReg ? ['fas', 'eye-slash'] : ['fas', 'eye']"
+                      [icon]="
+                        showConfirmPasswordReg
+                          ? ['fas', 'eye-slash']
+                          : ['fas', 'eye']
+                      "
                     ></fa-icon>
                   </button>
                 </div>
@@ -185,12 +197,17 @@
                   *ngIf="
                     registroForm.get('confirmPassword')?.invalid &&
                     (registroForm.get('confirmPassword')?.dirty ||
-                     registroForm.get('confirmPassword')?.touched)
+                      registroForm.get('confirmPassword')?.touched)
                   "
                   class="text-red-500 text-sm mt-1"
                 >
-                  <span *ngIf="registroForm.hasError('passwordMismatch')">Las contraseñas no coinciden</span>
-                  <span *ngIf="registroForm.get('confirmPassword')?.errors?.['required']">La confirmación de contraseña es requerida</span>
+                  <span *ngIf="registroForm.hasError('passwordMismatch')"
+                    >Las contraseñas no coinciden</span
+                  >
+                  <span
+                    *ngIf="registroForm.get('confirmPassword')?.errors?.['required']"
+                    >La confirmación de contraseña es requerida</span
+                  >
                 </div>
                 <div
                   *ngIf="
@@ -318,12 +335,14 @@
         </div>
       </div>
 
-      <div class="contenedor-informacion bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-xl shadow-2xl">
+      <div
+        class="contenedor-informacion bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-xl shadow-2xl"
+      >
         <ng-container *ngIf="InfoSistema && InfoSistema.length > 0">
           <ng-container *ngTemplateOutlet="infoTemplate"></ng-container>
         </ng-container>
       </div>
-      
+
       <ng-template #infoTemplate>
         <div *ngIf="!isRegistering" class="flex-grow w-full max-w-md mt-0">
           <div class="flex items-center justify-start mb-6">
@@ -335,10 +354,20 @@
               {{ InfoSistema[currentInfoIndex].title }}
             </h2>
           </div>
-          <ul class="space-y-4 bg-gray-800 bg-opacity-80 backdrop-blur-md p-6 rounded-lg shadow-lg border border-blue-500 border-opacity-30">
-            <li *ngFor="let item of InfoSistema[currentInfoIndex].items" class="flex items-start transition-all duration-300 hover:translate-x-2">
-              <fa-icon [icon]="item.icon" class="text-blue-400 text-xl mr-3 mt-1"></fa-icon>
-              <span class="text-gray-200 text-lg leading-relaxed">{{ item.text }}</span>
+          <ul
+            class="space-y-4 bg-gray-800 bg-opacity-80 backdrop-blur-md p-6 rounded-lg shadow-lg border border-blue-500 border-opacity-30"
+          >
+            <li
+              *ngFor="let item of InfoSistema[currentInfoIndex].items"
+              class="flex items-start transition-all duration-300 hover:translate-x-2"
+            >
+              <fa-icon
+                [icon]="item.icon"
+                class="text-blue-400 text-xl mr-3 mt-1"
+              ></fa-icon>
+              <span class="text-gray-200 text-lg leading-relaxed">{{
+                item.text
+              }}</span>
             </li>
           </ul>
         </div>
