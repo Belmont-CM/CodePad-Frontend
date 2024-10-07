@@ -26,7 +26,7 @@ import { Inject, PLATFORM_ID } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginConfirmationDialogComponent } from '../login/login-confirmation/login-confirmation.component'; 
+import { LoginConfirmationDialogComponent } from '../login/login-confirmation/login-confirmation.component';
 
 @Component({
   selector: 'app-login',
@@ -34,8 +34,10 @@ import { LoginConfirmationDialogComponent } from '../login/login-confirmation/lo
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('canvasElement', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('loginForm', { static: true }) loginForm!: ElementRef<HTMLFormElement>;
+  @ViewChild('canvasElement', { static: true })
+  canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('loginForm', { static: true })
+  loginForm!: ElementRef<HTMLFormElement>;
 
   registroForm!: FormGroup;
 
@@ -121,18 +123,20 @@ export class LoginComponent implements OnInit {
   }
 
   createForm() {
-    this.registroForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(4)]],
-      correo: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-      nombres: ['', Validators.required],
-      apellidoPaterno: ['', Validators.required],
-      apellidoMaterno: ['', Validators.required],
-      pistaPassword: ['', Validators.required]
-    }, { validator: this.confirmarContraseña });
+    this.registroForm = this.fb.group(
+      {
+        username: ['', [Validators.required, Validators.minLength(4)]],
+        correo: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+        nombres: ['', Validators.required],
+        apellidoPaterno: ['', Validators.required],
+        apellidoMaterno: ['', Validators.required],
+        pistaPassword: ['', Validators.required],
+      },
+      { validator: this.confirmarContraseña }
+    );
   }
-  
 
   ngOnInit() {
     this.createForm();
@@ -150,14 +154,14 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('token', response.access);
             localStorage.setItem('refreshToken', response.refresh);
           }
-  
+
           this.toastr.success('Inicio de sesión exitoso', 'Éxito', {
             positionClass: 'toast-top-right',
             timeOut: 3000,
             closeButton: true,
             progressBar: true,
           });
-  
+
           setTimeout(() => {
             this.router.navigate(['/dashboard']);
           }, 3000);
@@ -183,16 +187,19 @@ export class LoginComponent implements OnInit {
   }
 
   crearUsuario() {
-    debugger
+    debugger;
     if (this.registroForm.invalid) {
       if (this.registroForm.hasError('passwordMismatch')) {
         this.toastr.error('Las contraseñas no coinciden', 'Error');
       } else {
-        this.toastr.error('Por favor, complete todos los campos requeridos', 'Error');
+        this.toastr.error(
+          'Por favor, complete todos los campos requeridos',
+          'Error'
+        );
       }
       return;
     }
-  
+
     const formValues = this.registroForm.value;
     const nuevoUsuario = {
       username: formValues.username,
@@ -201,30 +208,36 @@ export class LoginComponent implements OnInit {
       apellido_materno: formValues.apellidoMaterno,
       correo: formValues.correo,
       password: formValues.password,
-      pista_password: formValues.pistaPassword
+      pista_password: formValues.pistaPassword,
     };
-  
+
     this.loginService.postData('usuarios/', nuevoUsuario).subscribe({
       next: (response) => {
         this.toastr.success('Usuario creado con éxito', 'Éxito');
         console.log('Respuesta del servidor:', response);
-        this.openLoginConfirmationDialog(nuevoUsuario.username, nuevoUsuario.password);
+        this.openLoginConfirmationDialog(
+          nuevoUsuario.username,
+          nuevoUsuario.password
+        );
       },
       error: (error) => {
         console.error('Error:', error);
         if (error.status === 400) {
-          this.toastr.error('Error al crear el usuario. Verifique los datos ingresados.', 'Error');
+          this.toastr.error(
+            'Error al crear el usuario. Verifique los datos ingresados.',
+            'Error'
+          );
         } else {
           this.toastr.error('Ocurrió un error en el servidor', 'Error');
         }
-      }
+      },
     });
   }
-  
+
   confirmarContraseña(formGroup: FormGroup) {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmPassword')?.value;
-  
+
     if (password !== confirmPassword) {
       formGroup.get('confirmPassword')?.setErrors({ passwordMismatch: true });
     } else {
@@ -238,15 +251,13 @@ export class LoginComponent implements OnInit {
       panelClass: ['custom-dialog-container'],
       backdropClass: 'custom-dialog-backdrop',
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
+
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'login') {
         this.loginWithNewCredentials(username, password);
       }
     });
   }
-  
-  
 
   loginWithNewCredentials(username: string, password: string) {
     this.loginService.login(username, password).subscribe({
