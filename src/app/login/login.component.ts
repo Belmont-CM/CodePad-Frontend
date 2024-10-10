@@ -187,7 +187,6 @@ export class LoginComponent implements OnInit {
   }
 
   crearUsuario() {
-    debugger;
     if (this.registroForm.invalid) {
       if (this.registroForm.hasError('passwordMismatch')) {
         this.toastr.error('Las contraseñas no coinciden', 'Error');
@@ -307,4 +306,13 @@ export class LoginComponent implements OnInit {
   cambiarFormulario(formulario: 'main' | 'additional') {
     this.activeForm = formulario;
   }
+
+  closeForm() {
+    document.getElementById('registerFormContainer')?.classList.add('animate-fadeOut');
+    
+    setTimeout(() => {
+      this.isRegistering = false;
+    }, 500); 
+  }
+  
 }

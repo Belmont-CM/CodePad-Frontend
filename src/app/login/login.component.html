@@ -39,50 +39,50 @@
       </div>
 
       <div
-        *ngIf="isRegistering"
-        class="transition-opacity duration-500 ease-in-out w-full max-w-4xl bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30 p-6"
-      >
-        <button
-          (click)="isRegistering = false"
-          class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
-        >
-          <fa-icon [icon]="['fas', 'times']" size="lg"></fa-icon>
-        </button>
-        <h1 class="text-2xl font-bold text-white text-center mb-6">
-          Crear cuenta nueva
-        </h1>
-        <div class="flex mb-6 rounded-lg overflow-hidden">
-          <button
-            class="w-1/2 py-2.5 text-sm font-medium transition-all duration-300 focus:outline-none"
-            [ngClass]="{
-              'bg-blue-600 text-white': activeForm === 'main',
-              'bg-gray-700 text-gray-300 hover:bg-gray-600':
-                activeForm !== 'main'
-            }"
-            (click)="cambiarFormulario('main')"
-          >
-            Datos principales
-          </button>
-          <button
-            class="w-1/2 py-2.5 text-sm font-medium transition-all duration-300 focus:outline-none"
-            [ngClass]="{
-              'bg-gray-700 text-gray-300': activeForm === 'additional',
-              'bg-gray-700 text-gray-300 hover:bg-gray-600':
-                activeForm !== 'additional'
-            }"
-            (click)="cambiarFormulario('additional')"
-          >
-            Información Adicional
-          </button>
-        </div>
-        <div class="flex bg-gray-800/50 rounded-b-lg">
-          <div
-            class="w-1/2 p-6 transition-all duration-300"
-            [ngClass]="{
-              'opacity-100 blur-none': activeForm === 'main',
-              'opacity-50 blur-sm': activeForm !== 'main'
-            }"
-          >
+  *ngIf="isRegistering"
+  id="registerFormContainer"
+  [ngClass]="{ 'animate-fadeIn': isRegistering }"
+  class="transition-all duration-500 ease-in-out w-full max-w-4xl bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30 p-6"
+>
+  <button
+    (click)="closeForm()"
+    class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+  >
+    <fa-icon [icon]="['fas', 'times']" size="lg"></fa-icon>
+  </button>
+  <h1 class="text-2xl font-bold text-white text-center mb-6">Crear cuenta nueva</h1>
+
+  <div class="flex mb-6 rounded-lg overflow-hidden">
+    <button
+      class="w-1/2 py-2.5 text-sm font-medium transition-all duration-300 focus:outline-none"
+      [ngClass]="{
+        'bg-blue-600 text-white': activeForm === 'main',
+        'bg-gray-700 text-gray-300 hover:bg-gray-600': activeForm !== 'main'
+      }"
+      (click)="cambiarFormulario('main')"
+    >
+      Datos principales
+    </button>
+    <button
+      class="w-1/2 py-2.5 text-sm font-medium transition-all duration-300 focus:outline-none"
+      [ngClass]="{
+        'bg-gray-700 text-gray-300': activeForm === 'additional',
+        'bg-gray-700 text-gray-300 hover:bg-gray-600': activeForm !== 'additional'
+      }"
+      (click)="cambiarFormulario('additional')"
+    >
+      Información Adicional
+    </button>
+  </div>
+
+  <div class="flex bg-gray-800/50 rounded-b-lg">
+    <div
+      class="w-1/2 p-6 transition-all duration-300"
+      [ngClass]="{
+        'opacity-100 blur-none': activeForm === 'main',
+        'opacity-50 blur-sm': activeForm !== 'main'
+      }"
+    >
             <form [formGroup]="registroForm" class="space-y-4">
               <div>
                 <label for="username" class="block mb-1 text-gray-300"
@@ -224,12 +224,12 @@
           </div>
 
           <div
-            class="w-1/2 p-6 transition-all duration-300"
-            [ngClass]="{
-              'opacity-100 blur-none': activeForm === 'additional',
-              'opacity-50 blur-sm': activeForm !== 'additional'
-            }"
-          >
+      class="w-1/2 p-6 transition-all duration-300"
+      [ngClass]="{
+        'opacity-100 blur-none': activeForm === 'additional',
+        'opacity-50 blur-sm': activeForm !== 'additional'
+      }"
+    >
             <form [formGroup]="registroForm" class="space-y-4">
               <div>
                 <label for="nombres" class="block mb-1 text-gray-300"
