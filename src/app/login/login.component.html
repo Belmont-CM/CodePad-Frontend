@@ -4,9 +4,9 @@
   <app-templates-canvas></app-templates-canvas>
 
   <div class="flex flex-row justify-center items-center w-full max-w-[1075px]">
-    <!-- Contenedor izquierdo -->
+    <!-- Contenedor izquierdo --> <!-- LAS PROPIEDADES (w-[800px] h-[600px]) DEFINEN EL TAMOÑO DE LOS CONTENEDORES Y LAS PROPIEDADES (-ml-64) DEFINEN EL MARGEN HACÍA LA IZQUIERDA-->
     <div
-      class="w-[950px] h-[700px] p-8 flex flex-col justify-center items-center bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30"
+      class="w-[800px] h-[600px] p-8 flex flex-col justify-center items-center bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30 -ml-64"
     >
       <!-- Mensaje de bienvenida -->
       <div class="mb-8 text-center p-4" *ngIf="!isRegistering">
@@ -42,7 +42,7 @@
   *ngIf="isRegistering"
   id="registerFormContainer"
   [ngClass]="{ 'animate-fadeIn': isRegistering }"
-  class="transition-all duration-500 ease-in-out w-full max-w-4xl bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30 p-6"
+  class="transition-all duration-500 ease-in-out w-[780px] h-[580px] bg-gray-800/60 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700/30 p-6 mt-12"
 >
   <button
     (click)="closeForm()"
@@ -325,7 +325,7 @@
             </form>
           </div>
         </div>
-        <div class="mt-6 text-center">
+        <div class="-mt-2 text-center">
           <button
             (click)="crearUsuario()"
             class="w-full max-w-md bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
@@ -377,7 +377,7 @@
 
   <!-- Contenedor derecho -->
   <div
-    class="w-[500px] h-[700px] bg-gray-800/60 backdrop-blur-sm p-8 flex flex-col justify-center items-center rounded-lg shadow-lg border border-gray-700/30"
+    class="w-[400px] h-[600px] bg-gray-800/60 backdrop-blur-sm p-8 flex flex-col justify-center items-center rounded-lg shadow-lg border border-gray-700/30 -ml-52"
   >
     <div class="mb-8">
       <!-- Imagen del logo -->
