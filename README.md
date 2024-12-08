@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # CodePad-Frontend
 CodePad Frontend - ANGULAR
 =======
@@ -30,3 +31,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 >>>>>>> develop-zeuscm
+=======
+# CodePad-Frontend
+>>>>>>> 4adf4a7df9e94217256e9a59a24b1a575a805a8e
