@@ -1,0 +1,25 @@
+<div class="flex h-screen bg-gray-900 text-white overflow-hidden">
+    <!-- Templates Canvas (Fondo con efecto) -->
+    <app-templates-canvas class="absolute inset-0"></app-templates-canvas>
+  
+    <!-- Sidenav -->
+    <app-sidenav
+      [isOpen]="isSidenavOpen"
+      (toggleSidenav)="toggleSidenav()"
+      (logout)="handleLogout()">
+    </app-sidenav>
+
+    <!-- Header (Título) -->
+  <main class="flex-1 p-6 overflow-y-auto">
+    <div class="mb-6 bg-gray-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-gray-700/30">
+      <h2 class="text-2xl font-bold from-blue-400 to-indigo-400 mb-3">Notas</h2>
+    </div>
+
+    <!-- Contenedor de Notas -->
+    <div class="bg-gray-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-gray-700/30 hover:border-gray-600/50 transition-all duration-200 mb-6 h-max">
+        <div class="w-[280px] h-[180px] bg-gray-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-gray-700/30 hover:border-gray-600/50 transition-all duration-200 flex items-center justify-center">
+            <div class="bg-gray-700 px-4 py-1 rounded-lg flex items-center justify-center">
+              <fa-icon [icon]="faPlus" class="text-blue-500 text-3xl"></fa-icon>
+            </div>
+          </div>    
+    </div>

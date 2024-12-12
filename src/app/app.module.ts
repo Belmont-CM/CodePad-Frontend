@@ -20,6 +20,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AuthInterceptor } from './service/auth.interceptor';
 import { LoginConfirmationDialogComponent } from './login/login-confirmation/login-confirmation.component';
+import { NotasComponent } from './notas/notas.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { LoginConfirmationDialogComponent } from './login/login-confirmation/log
     SidenavComponent,
     SettingsComponent,
     LoginConfirmationDialogComponent,
+    NotasComponent,
   ],
   imports: [
     BrowserModule,
